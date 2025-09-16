@@ -1,5 +1,7 @@
 package com.udi.gaaf.producto;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,4 +9,12 @@ import org.springframework.stereotype.Service;
 public class ProductoService {
 	@Autowired
 	private ProductoRepository repository;
+	
+	
+	public List<DatosDetalleProducto> findAll(){
+		var productos = repository.findAll();
+		return productos.stream()
+				.map(pr -> new DatosDetalleProducto(pr.id, pr.nombre, pr.descripcion))
+				.toList();
+	}
 }
