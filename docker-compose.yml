@@ -1,0 +1,21 @@
+services:
+  gaaf-db:
+    image: mysql:8.4
+    container_name: gaaf_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: gaaf
+      MYSQL_DATABASE: db_gaaf
+    ports:
+      - "3306:3306"
+    volumes:
+      - gaaf_db:/var/lib/mysql
+    networks:
+      - gaaf_db_mysql
+
+volumes:
+  gaaf_db:
+
+networks: 
+  gaaf_db_mysql:
+    driver: bridge

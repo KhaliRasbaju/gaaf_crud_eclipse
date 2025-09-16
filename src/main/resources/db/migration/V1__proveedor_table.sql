@@ -1,0 +1,8 @@
+CREATE TABLE proveedor(
+	nit BIGINT NOT NULL,
+	nombre VARCHAR(150) NOT NULL,
+	direccion VARCHAR(200) NOT NULL,
+	telefono VARCHAR(10) NOT NULL,
+	correo VARCHAR(100) NOT NULL,
+	PRIMARY KEY(nit) 
+)
