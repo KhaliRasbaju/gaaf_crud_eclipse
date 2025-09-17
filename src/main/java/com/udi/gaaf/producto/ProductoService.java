@@ -17,4 +17,11 @@ public class ProductoService {
 				.map(pr -> new DatosDetalleProducto(pr.id, pr.nombre, pr.descripcion))
 				.toList();
 	}
+	
+	public List<DatosDetalleProducto> findAllByIds(List<Long> productosIds){
+		var productos = repository.findAllById(productosIds);
+		return productos.stream()
+				.map(pr -> new DatosDetalleProducto(pr.id, pr.nombre, pr.descripcion))
+				.toList();
+	}
 }

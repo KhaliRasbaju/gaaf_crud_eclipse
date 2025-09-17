@@ -39,6 +39,8 @@ public class Pedido {
 	LocalDateTime fechaEntrega;
 	Boolean recibido;
 	
+	Float valor;
+	
 	@ManyToOne()
 	@JoinColumn(name = "nit_proveedor", nullable = false)
 	private Proveedor proveedor;

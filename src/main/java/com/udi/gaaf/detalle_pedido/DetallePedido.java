@@ -22,7 +22,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class DetallePedido {
 	@Id
-	@Column(name = "id_detalle_pedido")
+	@Column(name = "id_pedido_producto")
 	Long id;
 	Float humedad;
 	@Column(name = "estado_cacao")
@@ -38,6 +38,6 @@ public class DetallePedido {
 	
 	
 	@ManyToOne()
-	@JoinColumn(name = "id_inventario", nullable = false )
+	@JoinColumn(name = "id_producto", nullable = false )
 	private Producto producto;
 }
