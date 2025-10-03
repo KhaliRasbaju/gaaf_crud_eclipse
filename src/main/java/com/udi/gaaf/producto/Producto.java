@@ -9,6 +9,8 @@ import com.udi.gaaf.inventario.Inventario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,11 +32,14 @@ public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_producto")
-	Long id;
+	private Long id;
 	
-	String nombre;
+	private String nombre;
 	
-	String descripcion;
+	private String descripcion;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoProducto tipo;
 	
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DetallePedido> detallePedidos;

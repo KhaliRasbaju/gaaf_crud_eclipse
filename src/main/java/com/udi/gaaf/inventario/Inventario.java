@@ -9,12 +9,11 @@ import com.udi.gaaf.transaccion_inventario.TransaccionInventario;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -31,30 +30,31 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class Inventario {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_inventario")
-	Long id;
+	@EmbeddedId
+	private InventarioId id;
+	
 	
 	@Column(name = "fecha_actulizado")
-	LocalDateTime fecha;
+	private LocalDateTime fecha;
 	
 	@Column(name = "cantidad_disponible")
-	Integer cantidadDisponible;
+	private Integer cantidadDisponible;
 	
 	@Column(name = "cantidad_reservada")
-	Integer cantidadReservada;
+	private Integer cantidadReservada;
 	
 	@OneToMany(mappedBy = "inventario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<TransaccionInventario> transaccionInventarios;
 	
 	
 	@ManyToOne
+	@MapsId("idBodega")
 	@JoinColumn(name = "id_bodega", nullable = false)
 	private Bodega bodega;
 	
 	
 	@ManyToOne
+	@MapsId("idProducto")
 	@JoinColumn(name = "id_producto", nullable = false)
 	private Producto producto;
 	

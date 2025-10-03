@@ -1,11 +1,10 @@
-package com.udi.gaaf.bodega;
+package com.udi.gaaf.departamento;
 
 import java.util.List;
 
-import com.udi.gaaf.inventario.Inventario;
+import com.udi.gaaf.municipio.Municipio;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,19 +17,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "bodega")
+@Table(name = "ubicacion_proveedor")
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Bodega {
-
+public class Departamento {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_bodega")
-	Long id;
-	String nombre;
-	String ubicacion;
-	@OneToMany(mappedBy = "bodega", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Inventario> inventarios;
+	private Long id;
+	
+	private String nombre;
+	
+	@OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Municipio> municipios;
+
 }

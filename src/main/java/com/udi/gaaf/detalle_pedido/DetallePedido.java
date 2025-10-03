@@ -4,10 +4,12 @@ import com.udi.gaaf.pedido.Pedido;
 import com.udi.gaaf.producto.Producto;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,9 +23,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class DetallePedido {
-	@Id
-	@Column(name = "id_pedido_producto")
-	Long id;
+	@EmbeddedId
+	private DetallePedidoId id;
 	Float humedad;
 	@Column(name = "estado_cacao")
 	Float estadoCacao;
@@ -33,11 +34,13 @@ public class DetallePedido {
 	
 	
 	@ManyToOne()
+	@MapsId("idPedido")
 	@JoinColumn(name = "id_pedido", nullable = false)
 	private Pedido pedido;
 	
 	
 	@ManyToOne()
+	@MapsId("idProducto")
 	@JoinColumn(name = "id_producto", nullable = false )
 	private Producto producto;
 }

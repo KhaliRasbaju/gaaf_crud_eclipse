@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.udi.gaaf.detalle_pedido.DetallePedido;
+import com.udi.gaaf.medio_pago.MedioPago;
 import com.udi.gaaf.proveedor.Proveedor;
 import com.udi.gaaf.transaccion_inventario.TransaccionInventario;
 
@@ -16,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -51,6 +53,8 @@ public class Pedido {
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<TransaccionInventario> transaccionInventarios;
 	
-	
+	@OneToOne
+	@JoinColumn(name ="id_medio_pago", nullable = false)
+	private MedioPago pago;
 	
 }

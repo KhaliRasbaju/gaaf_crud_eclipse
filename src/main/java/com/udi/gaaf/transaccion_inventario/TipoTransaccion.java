@@ -1,6 +1,6 @@
 package com.udi.gaaf.transaccion_inventario;
 
-public enum TransaccionTipo {
+public enum TipoTransaccion {
 	ENTREGA,
 	SALIDA,
 	AJUSTE

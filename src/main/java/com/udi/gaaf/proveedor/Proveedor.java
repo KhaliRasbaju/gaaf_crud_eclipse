@@ -3,7 +3,9 @@ package com.udi.gaaf.proveedor;
 
 import java.util.List;
 
+import com.udi.gaaf.cuenta.Cuenta;
 import com.udi.gaaf.pedido.Pedido;
+import com.udi.gaaf.ubicacion.Ubicacion;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -34,4 +36,10 @@ public class Proveedor {
 	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Pedido> pedidos;
 
+	
+	@OneToMany(mappedBy = "proveedor", orphanRemoval = true)
+	private List<Ubicacion> ubicaciones;
+	
+	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Cuenta> cuentas;
 }

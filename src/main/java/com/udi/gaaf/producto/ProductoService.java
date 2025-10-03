@@ -14,14 +14,14 @@ public class ProductoService {
 	public List<DatosDetalleProducto> findAll(){
 		var productos = repository.findAll();
 		return productos.stream()
-				.map(pr -> new DatosDetalleProducto(pr.id, pr.nombre, pr.descripcion))
+				.map(pr -> new DatosDetalleProducto(pr.getId(), pr.getNombre(), pr.getDescripcion()))
 				.toList();
 	}
 	
 	public List<DatosDetalleProducto> findAllByIds(List<Long> productosIds){
 		var productos = repository.findAllById(productosIds);
 		return productos.stream()
-				.map(pr -> new DatosDetalleProducto(pr.id, pr.nombre, pr.descripcion))
+				.map(pr -> new DatosDetalleProducto(pr.getId(), pr.getNombre(), pr.getDescripcion()))
 				.toList();
 	}
 }
