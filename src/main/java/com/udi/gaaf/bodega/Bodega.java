@@ -1,5 +1,6 @@
 package com.udi.gaaf.bodega;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.udi.gaaf.inventario.Inventario;
@@ -33,4 +34,11 @@ public class Bodega {
 	String ubicacion;
 	@OneToMany(mappedBy = "bodega", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Inventario> inventarios;
+	
+	
+	public Bodega(DatosRegistrarBodega datos) {
+		this.nombre = datos.nombre();
+		this.ubicacion = datos.ubicacion();
+		this.inventarios = new ArrayList<Inventario>();
+	}
 }

@@ -31,4 +31,9 @@ public class EntidadBancaria {
 	@OneToOne(mappedBy = "entidad")
 	private Cuenta cuenta;
 	
+	
+	public EntidadBancaria(DatosRegistrarEntidadBancaria datos) {
+		this.nombre = datos.nombre();
+		this.cuenta = new Cuenta();
+	}
 }
