@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 	
-	List<Cuenta> findAllByProveedorByNit(Long nit);
+	List<Cuenta> findAllByProveedor_Nit(Long nit);
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.udi.gaaf.municipio.Municipio;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "ubicacion_proveedor")
+@Table(name = "ubicacion_departamento")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,6 +27,7 @@ public class Departamento {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_ubicacion_departamento")
 	private Long id;
 	
 	private String nombre;

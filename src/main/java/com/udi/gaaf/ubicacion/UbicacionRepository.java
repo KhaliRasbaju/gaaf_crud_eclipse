@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UbicacionRepository extends JpaRepository<Ubicacion, Long> {
-	List<Ubicacion> findAllByProveedorByNit(Long id);
+	List<Ubicacion> findAllByProveedor_Nit(Long id);
 }

@@ -3,6 +3,7 @@ package com.udi.gaaf.medio_pago;
 import com.udi.gaaf.metodo_pago.MetodoPago;
 import com.udi.gaaf.pedido.Pedido;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,8 +26,10 @@ public class MedioPago {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_medio_pago")
 	private Long id;
 	
+	@Column(name = "referencia_pago")
 	private String referencia;
 	
 	

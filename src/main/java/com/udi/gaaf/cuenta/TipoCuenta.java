@@ -2,5 +2,7 @@ package com.udi.gaaf.cuenta;
 
 public enum TipoCuenta {
 	AHORROS,
-	CORRIENTE
+	CORRIENTE,
+	DEPOSITO_ELECTRONICO,
+	EMPRESARIAL
 }

@@ -1,17 +1,22 @@
 package com.udi.gaaf.proveedor;
 
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
+
 
 import com.udi.gaaf.cuenta.Cuenta;
 import com.udi.gaaf.pedido.Pedido;
 import com.udi.gaaf.ubicacion.Ubicacion;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,31 +33,33 @@ import lombok.Setter;
 public class Proveedor {
 	
 	@Id
-	Long nit;	
-	String direccion;
-	String nombre;
-	String telefono;
-	String correo;
+	@Column(name = "nit")
+	private Long nit;	
+	private String nombre;
+	private String telefono;
+	private String correo;
+	private Boolean activo;
 	
-	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Pedido> pedidos;
+	
+	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Set<Pedido> pedidos;
 
 	
-	@OneToMany(mappedBy = "proveedor", orphanRemoval = true)
-	private List<Ubicacion> ubicaciones;
 	
-	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Cuenta> cuentas;
+	@OneToOne(mappedBy = "proveedor", orphanRemoval = true, fetch = FetchType.LAZY)
+	private Ubicacion ubicaciones;
+	
+	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Set<Cuenta> cuentas;
 	
 	
 	public Proveedor(DatosRegistrarProveedor datos) {
 		this.nit = datos.nit();
-		this.direccion = datos.direccion();
+		this.activo = true;
 		this.nombre = datos.nombre();
 		this.telefono = datos.telefono();
 		this.correo = datos.correo();
-		this.pedidos = new ArrayList<Pedido>();
-		this.ubicaciones = new ArrayList<Ubicacion>();
-		this.cuentas = new ArrayList<Cuenta>();
+		this.pedidos = new HashSet<Pedido>();
+		this.cuentas = new HashSet<Cuenta>();
 	}
 }

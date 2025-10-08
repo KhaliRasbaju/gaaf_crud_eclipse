@@ -21,8 +21,6 @@ public record DatosRegistrarProveedor(
 	@Email
 	@NotBlank
 	String correo,
-	@NotBlank
-	String direccion,
 	@NotNull
 	@Valid
 	DatosRegistrarUbicacion ubicacion,

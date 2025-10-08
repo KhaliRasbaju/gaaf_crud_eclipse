@@ -13,7 +13,7 @@ public record DatosRegistrarCuenta(
 	
 	@Positive
 	@NotNull(message = "Numero de la cuenta bancaria requerido")
-	Long id_entidad
+	Long idEntidad
 ) {
 
 }

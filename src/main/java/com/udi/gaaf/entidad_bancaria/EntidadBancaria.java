@@ -1,12 +1,17 @@
 package com.udi.gaaf.entidad_bancaria;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.udi.gaaf.cuenta.Cuenta;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,17 +28,18 @@ public class EntidadBancaria {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_entidad_bancaria")
 	private Long id;
 	
 	private String nombre;
 	
 	
-	@OneToOne(mappedBy = "entidad")
-	private Cuenta cuenta;
+	@OneToMany(mappedBy = "entidad",fetch = FetchType.LAZY)
+	private List<Cuenta> cuentas;
 	
 	
 	public EntidadBancaria(DatosRegistrarEntidadBancaria datos) {
 		this.nombre = datos.nombre();
-		this.cuenta = new Cuenta();
+		this.cuentas = new ArrayList<Cuenta>();
 	}
 }

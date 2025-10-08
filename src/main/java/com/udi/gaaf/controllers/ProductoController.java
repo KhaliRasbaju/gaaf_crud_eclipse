@@ -18,6 +18,7 @@ public class ProductoController {
 	@Autowired
 	private ProductoService service;
 	
+	
 	@GetMapping
 	public ResponseEntity<List<DatosDetalleProducto>> findAll(){
 		var productos = service.findAll();

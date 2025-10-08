@@ -3,6 +3,7 @@ package com.udi.gaaf.ubicacion;
 import com.udi.gaaf.municipio.Municipio;
 import com.udi.gaaf.proveedor.Proveedor;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,23 +27,22 @@ public class Ubicacion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_ubicacion_proveedor")
 	private Long id;
 	
 	private String direccion;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "nit")
 	private Proveedor proveedor;
 	
 	@OneToOne
-	@JoinColumn(name = "id_ubicacion_municipio")
+	@JoinColumn(name = "id_municipio", nullable = false)
 	private Municipio municipio;
 	
-	public Ubicacion(DatosRegistrarUbicacion datos, Municipio municipio) {
-		
+	public Ubicacion(DatosRegistrarUbicacion datos, Municipio municipio, Proveedor proveedor) {
 		this.direccion = datos.direccion();
 		this.municipio = municipio;
-		this.proveedor = new Proveedor();
-		
+		this.proveedor = proveedor;	
 	}
 }

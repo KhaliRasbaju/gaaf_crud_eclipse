@@ -2,6 +2,7 @@ package com.udi.gaaf.metodo_pago;
 
 import com.udi.gaaf.medio_pago.MedioPago;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class MetodoPago {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_metodo_pago")
 	private Long id;
 	private String nombre;
 	

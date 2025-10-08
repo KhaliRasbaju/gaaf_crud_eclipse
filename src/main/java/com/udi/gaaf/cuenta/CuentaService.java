@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.udi.gaaf.common.DatosDetalleResponse;
 import com.udi.gaaf.entidad_bancaria.EntidadBancariaService;
 import com.udi.gaaf.errors.NotFoundException;
+import com.udi.gaaf.proveedor.Proveedor;
 
 @Service
 public class CuentaService {
@@ -36,16 +37,16 @@ public class CuentaService {
 	
 	
 	
-	public DatosDetalleCuenta crear(DatosRegistrarCuenta datos) {
-		var entidad = entidadBancariaService.obtenerEntidadBancariaPorId(datos.id_entidad());
-		var cuenta = new Cuenta(datos, entidad);
+	public DatosDetalleCuenta crear(DatosRegistrarCuenta datos, Proveedor proveedor) {
+		var entidad = entidadBancariaService.obtenerEntidadBancariaPorId(datos.idEntidad());
+		var cuenta = new Cuenta(datos, entidad, proveedor);
 		var nuevaCuenta = repository.save(cuenta);
 		return detalleCuenta(nuevaCuenta, nuevaCuenta.getEntidad().getId());
 	}
 	
 	
 	public DatosDetalleCuenta editar(DatosRegistrarCuenta datos, Long id) {
-		var entidad = datos.id_entidad() != null ? entidadBancariaService.obtenerEntidadBancariaPorId(datos.id_entidad()) : null;
+		var entidad = datos.idEntidad() != null ? entidadBancariaService.obtenerEntidadBancariaPorId(datos.idEntidad()) : null;
 		var cuenta = obtenerCuentaPorId(id);
 		if(entidad!= null) cuenta.setEntidad(entidad);
 		if(cuenta.getNumero() != datos.numero()) cuenta.setNumero(datos.numero());
@@ -67,7 +68,7 @@ public class CuentaService {
 	}
 	
 	public List<DatosDetalleCuenta> obtenerTodosPorNit(Long nit){
-		var cuentas = repository.findAllByProveedorByNit(nit);
+		var cuentas = repository.findAllByProveedor_Nit(nit);
 		return cuentas.stream().map(c -> detalleCuenta(c, c.getEntidad().getId())).toList();
 	}
 	

@@ -23,15 +23,7 @@ public class CuentaController {
 
 	@Autowired
 	private CuentaService service;
-	
-	public ResponseEntity<DatosDetalleCuenta>  crear(@RequestBody @Valid DatosRegistrarCuenta datos) {
-		if(datos == null) {
-			throw new NotRequestBodyException("Se requiere body");
-		}
-		var detalle = service.crear(datos);
-		return ResponseEntity.status(HttpStatus.CREATED).body(detalle);
-	}
-	
+
 	
 	public ResponseEntity<DatosDetalleCuenta> editar(@RequestBody @Valid  DatosRegistrarCuenta datos, @PathVariable Long id) {
 		if(datos == null || id == null) {

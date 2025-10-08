@@ -1,5 +1,6 @@
 package com.udi.gaaf.proveedor;
 
+
 import java.util.List;
 
 import com.udi.gaaf.cuenta.DatosDetalleCuenta;
@@ -13,5 +14,4 @@ public record DatosDetalleProveedor(
 	List<DatosDetalleUbicacion> ubicacion,
 	List<DatosDetalleCuenta> cuenta
 ) {
-	
 }

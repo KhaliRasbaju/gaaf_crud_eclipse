@@ -44,7 +44,7 @@ public class Pedido {
 	Float valor;
 	
 	@ManyToOne()
-	@JoinColumn(name = "nit_proveedor", nullable = false)
+	@JoinColumn(name = "nit", nullable = false)
 	private Proveedor proveedor;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)

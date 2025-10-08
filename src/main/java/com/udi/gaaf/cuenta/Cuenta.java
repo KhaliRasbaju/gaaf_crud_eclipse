@@ -29,6 +29,7 @@ public class Cuenta {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_cuenta_proveedor")
 	private Long id;
 	
 	
@@ -44,17 +45,17 @@ public class Cuenta {
 	@JoinColumn(name = "nit", nullable = false)
 	private Proveedor proveedor;
 	
-	@OneToOne
-	@JoinColumn(name ="id_entidad_bancaria", nullable = false)
+	@ManyToOne
+	@JoinColumn(name ="id_entidad_bancaria",nullable = false)
 	private EntidadBancaria entidad;
 	
 	
 	
 	
-	public Cuenta(DatosRegistrarCuenta datos, EntidadBancaria entidad) {
+	public Cuenta(DatosRegistrarCuenta datos, EntidadBancaria entidad, Proveedor proveedor) {
 		this.numero = datos.numero();
 		this.tipo = datos.tipo();
-		this.proveedor = new Proveedor();
+		this.proveedor = proveedor;
 		this.entidad = entidad;
 	}
 	
