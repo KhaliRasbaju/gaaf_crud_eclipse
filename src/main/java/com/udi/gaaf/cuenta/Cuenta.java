@@ -48,5 +48,17 @@ public class Cuenta {
 	@JoinColumn(name ="id_entidad_bancaria", nullable = false)
 	private EntidadBancaria entidad;
 	
+	
+	
+	
+	public Cuenta(DatosRegistrarCuenta datos, EntidadBancaria entidad) {
+		this.numero = datos.numero();
+		this.tipo = datos.tipo();
+		this.proveedor = new Proveedor();
+		this.entidad = entidad;
+	}
+	
+	
+	
 
 }

@@ -1,6 +1,7 @@
 package com.udi.gaaf.proveedor;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.udi.gaaf.cuenta.Cuenta;
@@ -42,4 +43,16 @@ public class Proveedor {
 	
 	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Cuenta> cuentas;
+	
+	
+	public Proveedor(DatosRegistrarProveedor datos) {
+		this.nit = datos.nit();
+		this.direccion = datos.direccion();
+		this.nombre = datos.nombre();
+		this.telefono = datos.telefono();
+		this.correo = datos.correo();
+		this.pedidos = new ArrayList<Pedido>();
+		this.ubicaciones = new ArrayList<Ubicacion>();
+		this.cuentas = new ArrayList<Cuenta>();
+	}
 }

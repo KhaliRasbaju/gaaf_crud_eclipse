@@ -37,4 +37,12 @@ public class Ubicacion {
 	@OneToOne
 	@JoinColumn(name = "id_ubicacion_municipio")
 	private Municipio municipio;
+	
+	public Ubicacion(DatosRegistrarUbicacion datos, Municipio municipio) {
+		
+		this.direccion = datos.direccion();
+		this.municipio = municipio;
+		this.proveedor = new Proveedor();
+		
+	}
 }

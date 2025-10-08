@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.udi.gaaf.common.DatosDetalleCommon;
 import com.udi.gaaf.common.DatosDetalleResponse;
-import com.udi.gaaf.entidad_bancaria.DatosDetalleEntidadBancaria;
 import com.udi.gaaf.entidad_bancaria.DatosRegistrarEntidadBancaria;
 import com.udi.gaaf.entidad_bancaria.EntidadBancariaService;
 import com.udi.gaaf.errors.NotRequestBodyException;
@@ -26,7 +26,7 @@ public class EntidadBancariaController {
 	private EntidadBancariaService service;
 	
 	
-	public ResponseEntity<DatosDetalleEntidadBancaria> crear(@RequestBody(required = false) @Valid DatosRegistrarEntidadBancaria datos) {
+	public ResponseEntity<DatosDetalleCommon> crear(@RequestBody(required = false) @Valid DatosRegistrarEntidadBancaria datos) {
 		if(datos == null) {
 			throw new NotRequestBodyException("Se requiere body");
 		}
@@ -35,7 +35,7 @@ public class EntidadBancariaController {
 	}
 	
 	
-	public ResponseEntity<DatosDetalleEntidadBancaria> editar(@PathVariable Long id, @RequestBody(required = false) @Valid DatosRegistrarEntidadBancaria datos) {
+	public ResponseEntity<DatosDetalleCommon> editar(@PathVariable Long id, @RequestBody(required = false) @Valid DatosRegistrarEntidadBancaria datos) {
 		if(datos == null || id == null) {
 			throw new NotRequestBodyException("Se requiere body y el id de la entidad bancaria");
 		}
@@ -43,7 +43,7 @@ public class EntidadBancariaController {
 		return ResponseEntity.ok(detalle);
 	}
 	
-	public ResponseEntity<DatosDetalleEntidadBancaria> obtenerPorId(@PathVariable Long id) {
+	public ResponseEntity<DatosDetalleCommon> obtenerPorId(@PathVariable Long id) {
 		if(id == null) {
 			throw new NotRequestBodyException("Se requiere el id de la entidad bancaria");
 		}
@@ -51,7 +51,7 @@ public class EntidadBancariaController {
 		return ResponseEntity.ok(detalle);
 	}
 	
-	public ResponseEntity<List<DatosDetalleEntidadBancaria>> obtenerTodos(){
+	public ResponseEntity<List<DatosDetalleCommon>> obtenerTodos(){
 		var detalle = service.obtenerTodos();
 		return ResponseEntity.ok(detalle);
 	}

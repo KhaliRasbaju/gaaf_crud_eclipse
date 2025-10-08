@@ -1,6 +1,7 @@
 package com.udi.gaaf.producto;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.udi.gaaf.detalle_pedido.DetallePedido;
@@ -46,4 +47,13 @@ public class Producto {
 	
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Inventario> inventarios;
+	
+	
+	public Producto(DatosRegistrarProducto datos) {
+		this.nombre = datos.nombre();
+		this.descripcion = datos.descripcion();
+		this.tipo = datos.tipo();
+		this.detallePedidos = new ArrayList<DetallePedido>();
+		this.inventarios = new ArrayList<Inventario>();
+	}
 }
