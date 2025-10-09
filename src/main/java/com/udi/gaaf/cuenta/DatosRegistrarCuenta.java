@@ -10,7 +10,6 @@ public record DatosRegistrarCuenta(
 	String numero,
 	@NotNull(message = "No puede ser nulo debe ser [AHORROS | CORRIENTE]")
 	TipoCuenta tipo,
-	
 	@Positive
 	@NotNull(message = "Numero de la cuenta bancaria requerido")
 	Long idEntidad
