@@ -55,4 +55,14 @@ public class TransaccionInventario {
 	})
 	private Inventario inventario;
 
+	public TransaccionInventario(DatosRegistrarTransaccion datos, Inventario inventario, Pedido pedido) {
+		
+		this.tipo = datos.tipo();
+		this.cantidad = datos.cantidad();
+		this.fecha = LocalDateTime.now();
+		this.observacion = datos.observacion();
+		this.inventario = inventario;
+		
+		if (pedido != null) this.pedido = pedido;
+	}
 }

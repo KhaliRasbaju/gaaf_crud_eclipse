@@ -1,19 +1,21 @@
 package com.udi.gaaf.pedido;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record DatosDetallePedido(
+import com.udi.gaaf.detalle_pedido.DatosDetalleDetallePedido;
+import com.udi.gaaf.medio_pago.DatosDetalleMedioPago;
 
+public record DatosDetallePedido(
+	Long id,
 	Long nitProveedor,
-	List<String> productos,
-	Integer cantidad,
-	BigDecimal valor,
+	Double valor,
 	LocalDateTime fechaPedido,
 	Boolean recibido,
-	LocalDateTime fechaEntrega
-		
+	LocalDateTime fechaEntrega,
+	DatosDetalleMedioPago medioPago,
+	List<DatosDetalleDetallePedido> detallePedido
+	
 ) {
 
 }

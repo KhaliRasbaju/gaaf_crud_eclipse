@@ -1,5 +1,6 @@
 package com.udi.gaaf.metodo_pago;
 
+import com.udi.gaaf.common.DatosRegistrarCommon;
 import com.udi.gaaf.medio_pago.MedioPago;
 
 import jakarta.persistence.Column;
@@ -31,5 +32,10 @@ public class MetodoPago {
 	
 	@OneToOne(mappedBy = "metodo")
 	private MedioPago medio;
+	
+	
+	public MetodoPago(DatosRegistrarCommon datos) {
+		this.nombre = datos.nombre();
+	}
 	
 }

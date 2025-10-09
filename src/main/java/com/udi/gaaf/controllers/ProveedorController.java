@@ -26,16 +26,11 @@ public class ProveedorController {
 	@Autowired
 	private ProveedorService service;
 	
-
-	
-	
 	@PostMapping("/crear")
 	public ResponseEntity<DatosDetalleProveedor> crear(@RequestBody(required = false) @Valid DatosRegistrarProveedor datos) {
-		
 		if(datos == null) {
 			throw new NotRequestBodyException("Se requiere el body");
 		}
-		
 		var detalle = service.crear(datos);
 		return ResponseEntity.status(HttpStatus.CREATED).body(detalle);
 	}
@@ -43,13 +38,16 @@ public class ProveedorController {
 	
 	@GetMapping("/{nit}")
 	public ResponseEntity<DatosDetalleProveedor> obtenerPorNit(@PathVariable Long nit) {
+		if(nit == null) {
+			throw new NotRequestBodyException("Se requiere nit del proveedor");
+		}
 		var detalle = service.obtenerPorNit(nit);
 		return ResponseEntity.ok(detalle);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<DatosDetalleProveedor>> findAll(){
-		var proveedores = service.findAll();
+	public ResponseEntity<List<DatosDetalleProveedor>> obtenerTodos(){
+		var proveedores = service.obtenerTodos();
 		return ResponseEntity.ok(proveedores);
 	}
 	

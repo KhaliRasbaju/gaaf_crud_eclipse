@@ -5,14 +5,14 @@ import com.udi.gaaf.cuenta.CuentaService;
 import com.udi.gaaf.cuenta.DatosDetalleCuenta;
 import com.udi.gaaf.cuenta.DatosRegistrarCuenta;
 import com.udi.gaaf.errors.NotRequestBodyException;
-
 import jakarta.validation.Valid;
-
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +25,7 @@ public class CuentaController {
 	private CuentaService service;
 
 	
+	@PutMapping("/editar/{id}")
 	public ResponseEntity<DatosDetalleCuenta> editar(@RequestBody @Valid  DatosRegistrarCuenta datos, @PathVariable Long id) {
 		if(datos == null || id == null) {
 			throw new NotRequestBodyException("Se requiere body y el id");
@@ -34,6 +35,7 @@ public class CuentaController {
 	}
 	
 	
+	@GetMapping("/{id}")
 	public ResponseEntity<DatosDetalleCuenta> obtenerPorId(@PathVariable Long id) {
 		if(id == null) {
 			throw new NotRequestBodyException("Se requiere el id de la cuenta");
@@ -42,13 +44,13 @@ public class CuentaController {
 		return ResponseEntity.ok(detalle);
 	}
 	
-	
+	@GetMapping
 	public ResponseEntity<List<DatosDetalleCuenta>> obtenerTodos(){
 		var  detalle = service.obtenerTodos();
 		return ResponseEntity.ok(detalle);
 	}
 	
-	
+	@DeleteMapping("/id")
 	public  ResponseEntity<DatosDetalleResponse> eliminarPorId(@PathVariable Long id) {
 		if(id == null) {
 			throw new NotRequestBodyException("Se requiere el id de la cuenta");

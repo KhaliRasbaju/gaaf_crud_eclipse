@@ -16,7 +16,7 @@ public class BodegaService {
 		return new DatosDetalleBodega(bodega.getId(), bodega.getNombre(), bodega.getUbicacion());
 	}
 	
-	private Bodega obtenerBodegaPorId(Long id) {
+	public Bodega obtenerBodegaPorId(Long id) {
 		return repository.findById(id).orElseThrow(() -> new  NotFoundException("No hay bodega por el id: " + id));
 	}
 	

@@ -47,14 +47,14 @@ public class ProductoService {
 		
 	}
 	
-	public List<DatosDetalleProducto> findAll(){
+	public List<DatosDetalleProducto> obtenerTodos(){
 		var productos = repository.findAll();
 		return productos.stream()
 				.map(pr -> detalleProducto(pr))
 				.toList();
 	}
 	
-	public List<DatosDetalleProducto> findAllByIds(List<Long> productosIds){
+	public List<DatosDetalleProducto> obtenerTodosPorId(List<Long> productosIds){
 		var productos = repository.findAllById(productosIds);
 		return productos.stream()
 				.map(pr -> detalleProducto(pr))

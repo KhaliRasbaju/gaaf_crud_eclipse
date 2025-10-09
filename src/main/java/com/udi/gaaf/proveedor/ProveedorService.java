@@ -85,7 +85,7 @@ public class ProveedorService {
 		
 	}
 	
-	public List<DatosDetalleProveedor> findAll() {
+	public List<DatosDetalleProveedor> obtenerTodos() {
 		var proveedores = repository.findAll();
 		return proveedores.stream()
 				.map(p -> detalleProveedor(p, false))

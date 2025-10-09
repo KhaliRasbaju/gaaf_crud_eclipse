@@ -43,4 +43,14 @@ public class DetallePedido {
 	@MapsId("idProducto")
 	@JoinColumn(name = "id_producto", nullable = false )
 	private Producto producto;
+	
+	
+	public DetallePedido(DatosRegistrarDetallePedido datos, Pedido pedido, Producto producto) {
+		this.humedad = datos.humedad();
+		this.fermentacion = datos.fermentacion();
+		this.cantidad = datos.cantidad();
+		this.peso = datos.peso();
+		this.pedido = pedido;
+		this.producto = producto;
+	}
 }

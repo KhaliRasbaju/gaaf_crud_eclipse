@@ -1,13 +1,12 @@
 package com.udi.gaaf.pedido;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 import com.udi.gaaf.detalle_pedido.DetallePedido;
 import com.udi.gaaf.medio_pago.MedioPago;
 import com.udi.gaaf.proveedor.Proveedor;
 import com.udi.gaaf.transaccion_inventario.TransaccionInventario;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,26 +34,34 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pedido")
 	Long id;
-	@Column(name = "fecha_pedido")
+	@Column(name = "fecha_pedido", nullable =  true)
 	LocalDateTime fechaPedido;
 	@Column(name = "fecha_entrega")
 	LocalDateTime fechaEntrega;
+	@Column(nullable =  true)
 	Boolean recibido;
 	
-	Float valor;
+	Double valor;
 	
 	@ManyToOne()
 	@JoinColumn(name = "nit", nullable = false)
 	private Proveedor proveedor;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<DetallePedido> detallePedidos;
+	private Set<DetallePedido> detallePedidos;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<TransaccionInventario> transaccionInventarios;
+	private Set<TransaccionInventario> transaccionInventarios;
 	
 	@OneToOne
 	@JoinColumn(name ="id_medio_pago", nullable = false)
 	private MedioPago pago;
 	
+	public Pedido(DatosRegistrarPedido datos, Proveedor proveedor) {
+		this.fechaPedido = datos.fechaPedido();
+		this.valor = datos.valor();
+		this.proveedor = proveedor;
+		this.detallePedidos = new HashSet<DetallePedido>();
+		this.transaccionInventarios = new HashSet<TransaccionInventario>();
+	}
 }

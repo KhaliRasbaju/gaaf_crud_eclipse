@@ -3,6 +3,7 @@ package com.udi.gaaf.entidad_bancaria;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.udi.gaaf.common.DatosRegistrarCommon;
 import com.udi.gaaf.cuenta.Cuenta;
 
 import jakarta.persistence.Column;
@@ -38,7 +39,7 @@ public class EntidadBancaria {
 	private List<Cuenta> cuentas;
 	
 	
-	public EntidadBancaria(DatosRegistrarEntidadBancaria datos) {
+	public EntidadBancaria(DatosRegistrarCommon datos) {
 		this.nombre = datos.nombre();
 		this.cuentas = new ArrayList<Cuenta>();
 	}

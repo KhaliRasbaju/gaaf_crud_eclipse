@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.udi.gaaf.common.DatosDetalleCommon;
 import com.udi.gaaf.common.DatosDetalleResponse;
+import com.udi.gaaf.common.DatosRegistrarCommon;
 import com.udi.gaaf.errors.NotFoundException;
 
 @Service
@@ -23,14 +24,14 @@ public class EntidadBancariaService {
 		return repository.findById(id).orElseThrow(() -> new NotFoundException("Entidad bancaria no encontrada"));
 	}
 	
-	public DatosDetalleCommon crear(DatosRegistrarEntidadBancaria datos) {
+	public DatosDetalleCommon crear(DatosRegistrarCommon datos) {
 		var entidad = new EntidadBancaria(datos);
 		var nuevaEntidad = repository.save(entidad);
 		return detalleEntidad(nuevaEntidad);
 	}
 	
 	
-	public DatosDetalleCommon editar(Long id, DatosRegistrarEntidadBancaria datos) {
+	public DatosDetalleCommon editar(Long id, DatosRegistrarCommon datos) {
 		var entidad  = obtenerEntidadBancariaPorId(id);
 		if(datos.nombre() != null) entidad.setNombre(datos.nombre());
 		repository.save(entidad);

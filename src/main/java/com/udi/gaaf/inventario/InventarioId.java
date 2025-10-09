@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+@SuppressWarnings("serial")
 @Embeddable
 @Getter
 @Setter

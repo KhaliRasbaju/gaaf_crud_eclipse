@@ -1,7 +1,8 @@
 package com.udi.gaaf.inventario;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.udi.gaaf.bodega.Bodega;
 import com.udi.gaaf.producto.Producto;
@@ -38,13 +39,11 @@ public class Inventario {
 	private LocalDateTime fecha;
 	
 	@Column(name = "cantidad_disponible")
-	private Integer cantidadDisponible;
+	private Integer cantidad;
 	
-	@Column(name = "cantidad_reservada")
-	private Integer cantidadReservada;
-	
+
 	@OneToMany(mappedBy = "inventario", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<TransaccionInventario> transaccionInventarios;
+	private Set<TransaccionInventario> transaccionInventarios;
 	
 	
 	@ManyToOne
@@ -57,6 +56,14 @@ public class Inventario {
 	@MapsId("idProducto")
 	@JoinColumn(name = "id_producto", nullable = false)
 	private Producto producto;
+	
+	public Inventario (DatosRegistrarInventario datos, Bodega bodega, Producto producto) {
+		this.fecha = datos.fecha();
+		this.cantidad = datos.cantidad();
+		this.transaccionInventarios = new HashSet<TransaccionInventario>();
+		this.bodega = bodega;
+		this.producto = producto;
+	}
 	
 
 }

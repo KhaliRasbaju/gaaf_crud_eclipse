@@ -41,4 +41,11 @@ public class MedioPago {
 	@OneToOne(mappedBy = "pago")
 	private Pedido pedido;
 	
+	
+	public MedioPago(DatosRegistrarMedioPago datos, MetodoPago metodo, Pedido pedido) {
+		this.referencia = datos.referencia();
+		this.metodo = metodo;
+		this.pedido = pedido;
+	}
+	
 }

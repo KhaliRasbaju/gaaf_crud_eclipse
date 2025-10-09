@@ -1,9 +1,9 @@
-package com.udi.gaaf.entidad_bancaria;
+package com.udi.gaaf.common;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record DatosRegistrarEntidadBancaria(
+public record DatosRegistrarCommon(
 	@NotBlank
 	@NotNull
 	String nombre

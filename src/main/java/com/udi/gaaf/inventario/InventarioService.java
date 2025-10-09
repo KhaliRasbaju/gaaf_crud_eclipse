@@ -5,39 +5,52 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.udi.gaaf.vista_reporte_bodega.DatosBodegaDto;
-import com.udi.gaaf.vista_reporte_bodega.VistaReporteBodegaService;
-import com.udi.gaaf.vista_reporte_inventario.DatosInventarioDto;
-import com.udi.gaaf.vista_reporte_inventario.VistaReporteInventarioService;
+import com.udi.gaaf.bodega.BodegaService;
+import com.udi.gaaf.errors.NotFoundException;
+import com.udi.gaaf.producto.ProductoService;
 
 @Service
 public class InventarioService {
 
 	@Autowired
 	private InventarioRepository repository;
+	
 	@Autowired
-	private VistaReporteBodegaService reporteBodegaService;
+	private ProductoService productoService;
 	
-	@Autowired 
-	private VistaReporteInventarioService reporteInventarioService;
-	
-	
-	private Integer getCantidadTotal(Integer cantidad_disponible_total, Integer cantidad_reservada_total) {
-		return cantidad_disponible_total + cantidad_reservada_total;
+	@Autowired
+	private BodegaService bodegaService;
+
+	private DatosDetalleInventario detalleInventario(Inventario inventario) {
+		return new DatosDetalleInventario(inventario.getCantidad(), inventario.getFecha(), inventario.getBodega().getNombre(), inventario.getProducto().getNombre());
 	}
 	
-	public DatosReporte getReporte() {
-		
-		List<DatosBodegaDto> reporteBodega = reporteBodegaService.getReporteBodega();
-		
-		
-		List<DatosInventarioDto> repoprteInventarios = reporteInventarioService.getReporteInventario();
-		
-		Integer cantidadTotal = reporteBodega.stream()
-				.map(rb -> getCantidadTotal(rb.cantidadDisponibleTotal(), rb.cantidadReservadaTotal()))
-				.reduce(0, Integer::sum);
-		
-		return new DatosReporte(repoprteInventarios, reporteBodega, cantidadTotal);
+	
+	public Inventario obtenerPorInventarioIds(DatosBuscarInventarioIds datos) {
+		return repository.findById_IdBodegaAndId_IdProducto(datos.idBodega(), datos.idProducto()).orElseThrow(()->  new NotFoundException("No hay inventario por el id de la bodega: " + datos.toString()) );
+	}
+	
+	
+	
+	public DatosDetalleInventario crear(DatosRegistrarInventario datos) {
+		var producto = productoService.obtenerProductoPorId(datos.idProducto());
+		var bodega = bodegaService.obtenerBodegaPorId(datos.idBodega());
+		var inventario = new Inventario(datos, bodega, producto);
+		var nuevoInventario = repository.save(inventario);
+		return detalleInventario(nuevoInventario);
+	}
+	
+	public List<Inventario> obtenerInventarioPorBodegaId(Long id) {
+		var inventarios =  repository.findByBodegaId(id);
+		if(inventarios.isEmpty()) {
+			throw new NotFoundException("No hay inventario por el id de la bodega: " + id);
+		}
+		return inventarios;
+	}
+	
+	public List<DatosDetalleInventario> obtenerTodos(){
+		var inventarios = repository.findAll();
+		return inventarios.stream().map((i) -> detalleInventario(i) ).toList();
 	}
 	
 }
