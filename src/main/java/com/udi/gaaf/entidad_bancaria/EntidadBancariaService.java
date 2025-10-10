@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.udi.gaaf.common.DatosDetalleCommon;
 import com.udi.gaaf.common.DatosDetalleResponse;
@@ -24,13 +25,14 @@ public class EntidadBancariaService {
 		return repository.findById(id).orElseThrow(() -> new NotFoundException("Entidad bancaria no encontrada"));
 	}
 	
+	@Transactional
 	public DatosDetalleCommon crear(DatosRegistrarCommon datos) {
 		var entidad = new EntidadBancaria(datos);
 		var nuevaEntidad = repository.save(entidad);
 		return detalleEntidad(nuevaEntidad);
 	}
 	
-	
+	@Transactional
 	public DatosDetalleCommon editar(Long id, DatosRegistrarCommon datos) {
 		var entidad  = obtenerEntidadBancariaPorId(id);
 		if(datos.nombre() != null) entidad.setNombre(datos.nombre());

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import com.udi.gaaf.cuenta.CuentaService;
 import com.udi.gaaf.cuenta.DatosDetalleCuenta;
@@ -67,10 +67,9 @@ public class ProveedorService {
 	}
 	
 	
+	@Transactional
 	public DatosDetalleProveedor crear(DatosRegistrarProveedor datos) {
-		
 		existsProveedorByNit(datos.nit());
-		
 		var proveedor = new Proveedor(datos);
 		var nuevoProveedor = repository.save(proveedor);
 		cuentaService.crear(datos.cuenta(), nuevoProveedor);

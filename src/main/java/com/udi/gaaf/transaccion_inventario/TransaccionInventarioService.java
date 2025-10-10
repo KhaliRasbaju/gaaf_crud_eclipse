@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.udi.gaaf.errors.NotFoundException;
 import com.udi.gaaf.inventario.DatosBuscarInventarioIds;
@@ -34,8 +35,8 @@ public class TransaccionInventarioService {
 	}
 	
 
+	@Transactional
 	public DatosDetalleTransaccion crear(DatosRegistrarTransaccion datos) {
-		
 		DatosRegistrarInventario datosInventario = new DatosRegistrarInventario(LocalDateTime.now(), datos.cantidad(), datos.idProducto(), datos.idBodega());
 		inventarioService.crear(datosInventario);
 		DatosBuscarInventarioIds buscar = new DatosBuscarInventarioIds(datos.idBodega(), datos.idProducto());

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.udi.gaaf.common.DatosDetalleResponse;
 import com.udi.gaaf.entidad_bancaria.EntidadBancariaService;
@@ -44,7 +45,7 @@ public class CuentaService {
 		return detalleCuenta(nuevaCuenta, nuevaCuenta.getEntidad().getId());
 	}
 	
-	
+	@Transactional
 	public DatosDetalleCuenta editar(DatosRegistrarCuenta datos, Long id) {
 		var entidad = datos.idEntidad() != null ? entidadBancariaService.obtenerEntidadBancariaPorId(datos.idEntidad()) : null;
 		var cuenta = obtenerCuentaPorId(id);

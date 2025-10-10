@@ -4,6 +4,8 @@ import com.udi.gaaf.errors.NotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.udi.gaaf.common.DatosDetalleResponse;
 
 @Service
@@ -20,12 +22,13 @@ public class BodegaService {
 		return repository.findById(id).orElseThrow(() -> new  NotFoundException("No hay bodega por el id: " + id));
 	}
 	
-	
+	@Transactional
 	public DatosDetalleBodega crear(DatosRegistrarBodega datos) {
 		var bodega = new Bodega(datos); 
 		var bodegaNueva = repository.save(bodega);
 		return  detalleBodega(bodegaNueva);	}
 	
+	@Transactional
 	public DatosDetalleBodega editar(DatosRegistrarBodega datos, Long id) {
 		var bodega = obtenerBodegaPorId(id);
 		if(datos.nombre() != null) bodega.setNombre(datos.nombre());

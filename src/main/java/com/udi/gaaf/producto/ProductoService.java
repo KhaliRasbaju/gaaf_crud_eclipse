@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.udi.gaaf.common.DatosDetalleResponse;
 import com.udi.gaaf.errors.NotFoundException;
@@ -24,13 +25,14 @@ public class ProductoService {
 	}
 	
 	
-	
+	@Transactional
 	public DatosDetalleProducto crear(DatosRegistrarProducto datos) {
 		var producto = new Producto(datos);
 		var nuevoProducto = repository.save(producto);
 		return detalleProducto(nuevoProducto);
 	}
 	
+	@Transactional
 	public DatosDetalleProducto editar(DatosRegistrarProducto datos, Long id) {
 		var producto = obtenerProductoPorId(id);
 		if(datos.nombre()!= producto.getNombre()) producto.setNombre(datos.nombre());

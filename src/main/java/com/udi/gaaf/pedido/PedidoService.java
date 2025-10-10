@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.udi.gaaf.common.DatosDetalleResponse;
 import com.udi.gaaf.detalle_pedido.DetallePedidoService;
 import com.udi.gaaf.errors.NotFoundException;
@@ -38,6 +40,7 @@ public class PedidoService {
 		return repository.findById(id).orElseThrow(()-> new NotFoundException("Producto no encontrado por el id: "+id));
 	}
 	
+	@Transactional
 	public DatosDetallePedido crear(DatosRegistrarPedido datos) {
 		var proveedor = proveedorService.obtenerProveedorPorNit(datos.nitProveedor());
 		var creaMedio = medioPagoService.crear(datos.medioPago());
@@ -49,6 +52,7 @@ public class PedidoService {
 		return detallePedido(pedidoFinal);
 	}
 	
+	@Transactional
 	public DatosDetalleResponse recibir(Long id) {
 		var pedido = obtenerPedidoPorId(id);
 		pedido.setRecibido(true);
