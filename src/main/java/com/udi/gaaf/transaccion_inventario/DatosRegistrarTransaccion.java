@@ -2,12 +2,11 @@ package com.udi.gaaf.transaccion_inventario;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Positive;
 
 public record DatosRegistrarTransaccion(
 		
-	@NotNull(message = "campo se requerid [ENTREGA | SALIDA |AJUSTE]")
+	@NotNull(message = "campo se requerid [ENTRADA | PRODUCCION | MERMA]")
 	TipoTransaccion tipo,
 	
 	@NotNull
@@ -17,7 +16,7 @@ public record DatosRegistrarTransaccion(
 	@NotBlank
 	String observacion,
 	
-	@Null
+	@Positive
 	Long idPedido,
 	
 	@NotNull
