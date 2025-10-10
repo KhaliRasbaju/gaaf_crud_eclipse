@@ -26,12 +26,17 @@ public class DetallePedido {
 	
 	@EmbeddedId
 	private DetallePedidoId id;
-	Float humedad;
+	
+	private Float humedad;
+	
 	@Column(name = "estado_cacao")
-	Float estadoCacao;
-	Float fermentacion;
-	Integer cantidad;
-	Float peso;
+	private Float estadoCacao;
+	
+	private Float fermentacion;
+	
+	private Integer cantidad;
+	
+	private Float peso;
 	
 	
 	@ManyToOne()
@@ -49,6 +54,7 @@ public class DetallePedido {
 	public DetallePedido(DatosRegistrarDetallePedido datos, Pedido pedido, Producto producto) {
 		this.id = new DetallePedidoId(pedido.getId(), producto.getId());
 		this.humedad = datos.humedad();
+		this.estadoCacao = datos.estadoCacao();
 		this.fermentacion = datos.fermentacion();
 		this.cantidad = datos.cantidad();
 		this.peso = datos.peso();

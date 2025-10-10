@@ -35,23 +35,24 @@ public class Proveedor {
 	@Id
 	@Column(name = "nit")
 	private Long nit;	
+	
 	private String nombre;
+	
 	private String telefono;
+	
 	private String correo;
+	
 	private Boolean activo;
 	
 	
 	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<Pedido> pedidos;
-
-	
 	
 	@OneToOne(mappedBy = "proveedor", orphanRemoval = true, fetch = FetchType.LAZY)
 	private Ubicacion ubicaciones;
 	
 	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	private Set<Cuenta> cuentas;
-	
+	private Set<Cuenta> cuentas;	
 	
 	public Proveedor(DatosRegistrarProveedor datos) {
 		this.nit = datos.nit();

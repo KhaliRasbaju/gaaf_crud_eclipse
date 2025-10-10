@@ -32,10 +32,6 @@ public class Municipio {
 	
 	private String nombre;
 	
-	
-	
-	
-	
 	@ManyToOne
 	@JoinColumn(name = "id_ubicacion_departamento", nullable = false)
 	private Departamento departamento;

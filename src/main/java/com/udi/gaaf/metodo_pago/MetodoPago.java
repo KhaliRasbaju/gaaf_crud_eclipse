@@ -30,8 +30,8 @@ public class MetodoPago {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_metodo_pago")
 	private Long id;
-	private String nombre;
 	
+	private String nombre;
 	
 	@OneToMany(mappedBy = "metodo")
 	private Set<MedioPago> medio;

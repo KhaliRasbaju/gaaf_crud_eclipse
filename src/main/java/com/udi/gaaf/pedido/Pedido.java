@@ -33,15 +33,18 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pedido")
-	Long id;
-	@Column(name = "fecha_pedido", nullable =  true)
-	LocalDateTime fechaPedido;
-	@Column(name = "fecha_entrega")
-	LocalDateTime fechaEntrega;
-	@Column(nullable =  true)
-	Boolean recibido;
+	private Long id;
 	
-	Double valor;
+	@Column(name = "fecha_pedido", nullable =  true)
+	private LocalDateTime fechaPedido;
+	
+	@Column(name = "fecha_entrega")
+	private LocalDateTime fechaEntrega;
+	
+	@Column(nullable =  true)
+	private Boolean recibido;
+	
+	private Double valor;
 	
 	@ManyToOne()
 	@JoinColumn(name = "nit", nullable = false)
