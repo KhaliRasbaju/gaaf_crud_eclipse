@@ -57,10 +57,11 @@ public class Pedido {
 	@JoinColumn(name ="id_medio_pago", nullable = false)
 	private MedioPago pago;
 	
-	public Pedido(DatosRegistrarPedido datos, Proveedor proveedor) {
+	public Pedido(DatosRegistrarPedido datos, Proveedor proveedor, MedioPago medio) {
 		this.fechaPedido = datos.fechaPedido();
 		this.valor = datos.valor();
 		this.proveedor = proveedor;
+		this.pago = medio;
 		this.detallePedidos = new HashSet<DetallePedido>();
 		this.transaccionInventarios = new HashSet<TransaccionInventario>();
 	}

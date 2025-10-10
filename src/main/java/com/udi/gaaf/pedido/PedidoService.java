@@ -40,9 +40,10 @@ public class PedidoService {
 	
 	public DatosDetallePedido crear(DatosRegistrarPedido datos) {
 		var proveedor = proveedorService.obtenerProveedorPorNit(datos.nitProveedor());
-		var pedido = new Pedido(datos, proveedor);
+		var creaMedio = medioPagoService.crear(datos.medioPago());
+		var medio = medioPagoService.obtenerMedioPagoPorId(creaMedio.id());
+		var pedido = new Pedido(datos, proveedor, medio);
 		var nuevoPedido = repository.save(pedido);
-		medioPagoService.crear(datos.medioPago(), nuevoPedido);
 		datos.detalle().stream().forEach(d -> detallePedidoService.crear(d, nuevoPedido));
 		var pedidoFinal = obtenerPedidoPorId(nuevoPedido.getId());
 		return detallePedido(pedidoFinal);

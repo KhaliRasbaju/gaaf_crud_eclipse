@@ -7,7 +7,6 @@ import com.udi.gaaf.common.DatosDetalleResponse;
 import com.udi.gaaf.errors.BadRequestException;
 import com.udi.gaaf.errors.NotFoundException;
 import com.udi.gaaf.metodo_pago.MetodoPagoService;
-import com.udi.gaaf.pedido.Pedido;
 
 @Service
 public class MedioPagoService {
@@ -34,10 +33,10 @@ public class MedioPagoService {
 		return repository.findById(id).orElseThrow(()-> new NotFoundException("Medio de pago no encontrado por el id: "+id));
 	}
 		
-	public DatosDetalleMedioPago crear(DatosRegistrarMedioPago datos, Pedido pedido) {
+	public DatosDetalleMedioPago crear(DatosRegistrarMedioPago datos) {
 		existePorReferencia(datos.referencia());
 		var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
-		var medio = new MedioPago(datos, metodo, pedido);
+		var medio = new MedioPago(datos, metodo);
 		var nuevoMedio = repository.save(medio);
 		return detalleMedioPago(nuevoMedio);
 	}

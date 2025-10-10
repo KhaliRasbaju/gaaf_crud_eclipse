@@ -42,10 +42,9 @@ public class MedioPago {
 	private Pedido pedido;
 	
 	
-	public MedioPago(DatosRegistrarMedioPago datos, MetodoPago metodo, Pedido pedido) {
+	public MedioPago(DatosRegistrarMedioPago datos, MetodoPago metodo) {
 		this.referencia = datos.referencia();
 		this.metodo = metodo;
-		this.pedido = pedido;
 	}
 	
 }
