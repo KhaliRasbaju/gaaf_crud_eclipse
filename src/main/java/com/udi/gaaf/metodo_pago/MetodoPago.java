@@ -1,5 +1,8 @@
 package com.udi.gaaf.metodo_pago;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.udi.gaaf.common.DatosRegistrarCommon;
 import com.udi.gaaf.medio_pago.MedioPago;
 
@@ -8,7 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,12 +33,13 @@ public class MetodoPago {
 	private String nombre;
 	
 	
-	@OneToOne(mappedBy = "metodo")
-	private MedioPago medio;
+	@OneToMany(mappedBy = "metodo")
+	private Set<MedioPago> medio;
 	
 	
 	public MetodoPago(DatosRegistrarCommon datos) {
 		this.nombre = datos.nombre();
+		this.medio = new HashSet<MedioPago>();
 	}
 	
 }
