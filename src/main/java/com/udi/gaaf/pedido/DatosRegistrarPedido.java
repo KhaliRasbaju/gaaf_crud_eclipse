@@ -12,18 +12,22 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record DatosRegistrarPedido(
-	@NotBlank()
+	
+	@NotNull()
 	LocalDateTime fechaPedido,
+	
 	@Positive
 	@NotNull
 	Double valor,
-
+	
 	@Positive
 	@NotNull
 	Long nitProveedor,
+	
 	@NotNull
 	@Valid
 	DatosRegistrarMedioPago medioPago,
+	
 	@NotNull
 	@Valid
 	List<DatosRegistrarDetallePedido> detalle
