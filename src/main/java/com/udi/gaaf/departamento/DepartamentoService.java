@@ -10,6 +10,7 @@ import com.udi.gaaf.errors.NotFoundException;
 
 @Service
 public class DepartamentoService {
+	
 	@Autowired
 	private DepartamentoRepository repository;
 	

@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
 	
-	List<Municipio> findAllById_Ubicacion_Departamento(Long id);
+	List<Municipio> findAllByDepartamento_Id(Long id);
 }
