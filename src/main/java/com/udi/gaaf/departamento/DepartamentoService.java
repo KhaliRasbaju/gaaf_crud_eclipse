@@ -13,6 +13,8 @@ public class DepartamentoService {
 	@Autowired
 	private DepartamentoRepository repository;
 	
+	
+	
 	private DatosDetalleCommon detalleDepartamento(Departamento departamento) {
 		return new DatosDetalleCommon(departamento.getId(), departamento.getNombre());
 	}
@@ -30,8 +32,6 @@ public class DepartamentoService {
 		var departamentos  = repository.findAll();
 		return departamentos.stream().map(d-> detalleDepartamento(d)).toList();
 	}
-	
-	
 	
 	
 	

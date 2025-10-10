@@ -31,7 +31,7 @@ public class MunicipioService {
 	
 	
 	public List<DatosDetalleMunicipio> obtenerTodos(Long id) {
-		var municipios = repository.findAll();
+		var municipios = repository.findAllById_Ubicacion_Departamento(id);
 		return municipios.stream().map(m -> detalleMunicipio(m)).toList();
 	}
 	
