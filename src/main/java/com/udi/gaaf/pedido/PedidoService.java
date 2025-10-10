@@ -52,7 +52,7 @@ public class PedidoService {
 	public DatosDetalleResponse recibir(Long id) {
 		var pedido = obtenerPedidoPorId(id);
 		pedido.setRecibido(true);
-		pedido.setFechaEntrega(LocalDateTime.now());;
+		pedido.setFechaEntrega(LocalDateTime.now());
 		repository.save(pedido);
 		return new DatosDetalleResponse(200, "Pedido recibido correctamente");
 	}
