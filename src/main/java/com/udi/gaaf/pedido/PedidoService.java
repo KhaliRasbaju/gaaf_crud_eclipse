@@ -57,7 +57,7 @@ public class PedidoService {
 		var pedido = obtenerPedidoPorId(id);
 		pedido.setRecibido(true);
 		pedido.setFechaEntrega(LocalDateTime.now());
-		repository.save(pedido);
+		repository.saveAndFlush(pedido);
 		return new DatosDetalleResponse(200, "Pedido recibido correctamente");
 	}
 	
