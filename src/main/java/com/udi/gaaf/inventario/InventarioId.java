@@ -21,4 +21,9 @@ public class InventarioId implements Serializable{
 	private Long idProducto;
 	@Column(name = "id_bodega")
 	private Long idBodega;
+	
+	public InventarioId(Long idProducto, Long idBodega) {
+		this.idProducto = idProducto;
+		this.idBodega = idBodega;
+	}
 }

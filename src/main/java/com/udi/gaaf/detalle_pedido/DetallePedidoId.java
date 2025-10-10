@@ -22,4 +22,10 @@ public class DetallePedidoId implements Serializable {
 	private Long idPedido;
 	@Column(name = "id_producto")
 	private Long idProducto;
+	
+	
+	public DetallePedidoId(Long idPedido, Long idProducto) {
+	    this.idPedido = idPedido;
+	    this.idProducto = idProducto;
+	}
 }

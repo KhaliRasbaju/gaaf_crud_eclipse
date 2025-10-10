@@ -23,6 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class DetallePedido {
+	
 	@EmbeddedId
 	private DetallePedidoId id;
 	Float humedad;
@@ -46,6 +47,7 @@ public class DetallePedido {
 	
 	
 	public DetallePedido(DatosRegistrarDetallePedido datos, Pedido pedido, Producto producto) {
+		this.id = new DetallePedidoId(pedido.getId(), producto.getId());
 		this.humedad = datos.humedad();
 		this.fermentacion = datos.fermentacion();
 		this.cantidad = datos.cantidad();

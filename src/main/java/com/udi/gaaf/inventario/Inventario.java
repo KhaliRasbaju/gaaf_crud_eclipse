@@ -58,6 +58,7 @@ public class Inventario {
 	private Producto producto;
 	
 	public Inventario (DatosRegistrarInventario datos, Bodega bodega, Producto producto) {
+		this.id = new InventarioId(producto.getId(), bodega.getId());
 		this.fecha = datos.fecha();
 		this.cantidad = datos.cantidad();
 		this.transaccionInventarios = new HashSet<TransaccionInventario>();
