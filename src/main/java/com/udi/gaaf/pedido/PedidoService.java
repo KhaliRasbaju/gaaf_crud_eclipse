@@ -9,18 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.udi.gaaf.common.DatosDetalleResponse;
 import com.udi.gaaf.detalle_pedido.DetallePedidoService;
+import com.udi.gaaf.errors.BadRequestException;
 import com.udi.gaaf.errors.NotFoundException;
 import com.udi.gaaf.medio_pago.MedioPagoService;
 import com.udi.gaaf.proveedor.ProveedorService;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 
 @Service
 public class PedidoService {
-	
-	@PersistenceContext
-	private EntityManager em;
 	
 
 	@Autowired
@@ -35,6 +31,11 @@ public class PedidoService {
 	@Autowired
 	private MedioPagoService medioPagoService;
 
+	private void validarRecibirPedido(Pedido pedido) {
+		if(pedido.getRecibido()) {
+			throw new BadRequestException("El pedido ya esta recibido");
+		}
+	}
 	
 	private DatosDetallePedido detallePedido(Pedido pedido) {
 		var medio = medioPagoService.obtenerPorId(pedido.getPago().getId());
@@ -62,10 +63,10 @@ public class PedidoService {
 	@Transactional
 	public DatosDetalleResponse recibir(Long id) {
 		var pedido = obtenerPedidoPorId(id);
+		validarRecibirPedido(pedido);
 		pedido.setRecibido(true);
 		pedido.setFechaEntrega(LocalDateTime.now());
-		em.merge(pedido);
-		em.flush();
+		repository.saveAndFlush(pedido);
 		return new DatosDetalleResponse(200, "Pedido recibido correctamente");
 	}
 	

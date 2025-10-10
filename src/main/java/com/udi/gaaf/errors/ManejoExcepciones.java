@@ -16,7 +16,6 @@ import jakarta.validation.ValidationException;
 public class ManejoExcepciones {
 
 	
-	@SuppressWarnings("unused")
 	private record DatoErrorValidation(String campo, String error) {
 		public DatoErrorValidation(FieldError error) {
 			this(error.getField(), error.getDefaultMessage());
