@@ -13,8 +13,15 @@ import com.udi.gaaf.errors.NotFoundException;
 import com.udi.gaaf.medio_pago.MedioPagoService;
 import com.udi.gaaf.proveedor.ProveedorService;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 @Service
 public class PedidoService {
+	
+	@PersistenceContext
+	private EntityManager em;
+	
 
 	@Autowired
 	private PedidoRepository repository;
@@ -57,7 +64,8 @@ public class PedidoService {
 		var pedido = obtenerPedidoPorId(id);
 		pedido.setRecibido(true);
 		pedido.setFechaEntrega(LocalDateTime.now());
-		repository.saveAndFlush(pedido);
+		em.merge(pedido);
+		em.flush();
 		return new DatosDetalleResponse(200, "Pedido recibido correctamente");
 	}
 	

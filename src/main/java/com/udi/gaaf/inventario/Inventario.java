@@ -35,7 +35,7 @@ public class Inventario {
 	private InventarioId id;
 	
 	
-	@Column(name = "fecha_actulizado")
+	@Column(name = "fecha_actualizacion")
 	private LocalDateTime fecha;
 	
 	@Column(name = "cantidad_disponible")
