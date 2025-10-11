@@ -1,5 +1,8 @@
 package com.udi.gaaf.municipio;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.udi.gaaf.departamento.Departamento;
 import com.udi.gaaf.ubicacion.Ubicacion;
 
@@ -11,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -38,7 +42,7 @@ public class Municipio {
 	private Departamento departamento;
 	
 	
-	@OneToOne(mappedBy = "municipio")
-	private Ubicacion ubicacion;
+	@OneToMany(mappedBy = "municipio", fetch = FetchType.LAZY)
+	private Set<Ubicacion> ubicaciones = new HashSet<Ubicacion>();
 
 }
