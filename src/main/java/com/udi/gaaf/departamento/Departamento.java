@@ -1,5 +1,6 @@
 package com.udi.gaaf.departamento;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.udi.gaaf.municipio.Municipio;
@@ -7,6 +8,7 @@ import com.udi.gaaf.municipio.Municipio;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +34,7 @@ public class Departamento {
 	
 	private String nombre;
 	
-	@OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Municipio> municipios;
-
+	@OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Set<Municipio> municipios = new HashSet<Municipio>();
+	
 }
