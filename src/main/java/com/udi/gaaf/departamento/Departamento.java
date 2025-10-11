@@ -1,6 +1,6 @@
 package com.udi.gaaf.departamento;
 
-import java.util.List;
+import java.util.Set;
 
 import com.udi.gaaf.municipio.Municipio;
 
@@ -33,6 +33,6 @@ public class Departamento {
 	private String nombre;
 	
 	@OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Municipio> municipios;
+	private Set<Municipio> municipios;
 
 }
