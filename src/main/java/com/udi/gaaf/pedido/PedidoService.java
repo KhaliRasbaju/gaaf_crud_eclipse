@@ -48,6 +48,9 @@ public class PedidoService {
 		return repository.findById(id).orElseThrow(()-> new NotFoundException("Producto no encontrado por el id: "+id));
 	}
 	
+	
+	
+	
 	@Transactional
 	public DatosDetallePedido crear(DatosRegistrarPedido datos) {
 		var proveedor = proveedorService.obtenerProveedorPorNit(datos.nitProveedor());
@@ -59,6 +62,33 @@ public class PedidoService {
 		var pedidoFinal = obtenerPedidoPorId(nuevoPedido.getId());
 		return detallePedido(pedidoFinal);
 	}
+	
+	@Transactional
+	public DatosDetalleResponse editar(DatosRegistrarPedido datos, Long id) {
+		var pedido = obtenerPedidoPorId(id);
+		validarRecibirPedido(pedido);
+		var proveedor = proveedorService.obtenerProveedorPorNit(datos.nitProveedor());
+		medioPagoService.editar(datos.medioPago(), id);
+		if(pedido.getValor() != datos.valor()) pedido.setValor(datos.valor());
+		if(pedido.getProveedor().getNit() != datos.nitProveedor()) pedido.setProveedor(proveedor);
+		if(pedido.getFechaPedido() != datos.fechaPedido()) pedido.setFechaPedido(datos.fechaPedido());
+		for (var detalleNuevo : datos.detalle()) {
+		    var detalleExistente = pedido.getDetallePedidos().stream()
+		        .filter(d -> d.getProducto().getId().equals(detalleNuevo.idProducto()))
+		        .findFirst()
+		        .orElse(null);
+
+		    if (detalleExistente != null) {
+		        detallePedidoService.editar(detalleNuevo, pedido);
+		    } else {
+		        detallePedidoService.crear(detalleNuevo, pedido);
+		    }
+		}
+		
+		repository.save(pedido);
+		return new DatosDetalleResponse(200, "Pedido cambiado");
+	}
+	
 	
 	@Transactional
 	public DatosDetalleResponse recibir(Long id) {
@@ -79,5 +109,16 @@ public class PedidoService {
 	public List<DatosDetallePedido> obtenerTodos(){
 		var pedidos = repository.findAll();
 		return pedidos.stream().map((d) -> detallePedido(d)).toList();
+	}
+	
+	public DatosDetalleResponse eliminarPorId(Long id) {
+		var pedido = obtenerPedidoPorId(id);
+		validarRecibirPedido(pedido);
+		if(pedido.getTransaccionInventarios() != null) {
+			throw new BadRequestException("No se pude eliminar ya hay transacciones asociadas");
+		}
+		detallePedidoService.eliminarPorPedidoId(pedido.getId());
+		repository.delete(pedido);
+		return new DatosDetalleResponse(200, "Pedido eliminado correctamente");
 	}
 }

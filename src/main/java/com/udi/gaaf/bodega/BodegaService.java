@@ -1,5 +1,6 @@
 package com.udi.gaaf.bodega;
 
+import com.udi.gaaf.errors.BadRequestException;
 import com.udi.gaaf.errors.NotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,12 @@ public class BodegaService {
 	
 	public DatosDetalleResponse eliminarPorId(Long id) {
 		var bodega  = obtenerBodegaPorId(id);
+		
+		if(bodega.getInventarios() != null) {
+			throw new BadRequestException("No se puede eliminar la bodega ya que hay inventario");
+		}
+		
+		
 		repository.delete(bodega);
 		return new DatosDetalleResponse(200, "Bodega eliminada correctamente");
 	}

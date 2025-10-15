@@ -50,7 +50,7 @@ public class EntidadBancariaController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<DatosDetalleCommon> obtenerPorId(@PathVariable Long id) {
+	public ResponseEntity<DatosDetalleCommon> obtenerPorId(@PathVariable(required = false)  Long id) {
 		if(id == null) {
 			throw new NotRequestBodyException("Se requiere el id de la entidad bancaria");
 		}
@@ -65,7 +65,7 @@ public class EntidadBancariaController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<DatosDetalleResponse> eliminarPorId(@PathVariable Long id) {
+	public ResponseEntity<DatosDetalleResponse> eliminarPorId(@PathVariable(required = false) Long id) {
 		if(id == null) {
 			throw new NotRequestBodyException("Se requiere el id de la entidad bancaria");
 		}

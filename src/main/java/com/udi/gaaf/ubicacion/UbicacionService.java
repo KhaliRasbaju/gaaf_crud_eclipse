@@ -43,6 +43,14 @@ public class UbicacionService {
 		
 	}
 	
+	public DatosDetalleUbicacion editar(DatosRegistrarUbicacion datos, Proveedor proveedor) {
+		var municipio = municipioService.obtenerMunicipioPorId(datos.idMunicipio());
+		var ubicacion = obtenerUbicacionPorId(proveedor.getUbicaciones().getId());
+		if(ubicacion.getDireccion() != datos.direccion()) ubicacion.setDireccion(datos.direccion());
+		if(ubicacion.getMunicipio() != municipio) ubicacion.setMunicipio(municipio);
+		return detalleUbicacion(ubicacion);
+	}
+	
 	public DatosDetalleUbicacion obtenerPorId(Long id) {
 		var ubicacion = obtenerUbicacionPorId(id);
 		return detalleUbicacion(ubicacion);

@@ -41,6 +41,27 @@ public class DetallePedidoService {
 		return detalleDetallePedido(nuevoDetalle);
 	}
 	
+	public DatosDetalleResponse editar(DatosRegistrarDetallePedido datos, Pedido pedido) {
+	    var producto = productoService.obtenerProductoPorId(datos.idProducto());
+	    var detalleExistente = repository.findByPedidoIdAndProductoId(pedido.getId(), producto.getId())
+	            .orElseThrow(() -> new NotFoundException("Detalle no encontrado"));
+	    
+	    if(!detalleExistente.getProducto().equals(producto)) {
+	    	repository.delete(detalleExistente);
+	    	this.crear(datos, pedido);
+	    	return new DatosDetalleResponse(200, "Producto del detalle cambiado correctamente");
+	    }
+	    	
+	    if (detalleExistente.getHumedad() != datos.humedad()) detalleExistente.setHumedad(datos.humedad());
+	    if (detalleExistente.getFermentacion() != datos.fermentacion()) detalleExistente.setFermentacion(datos.fermentacion());
+	    if (detalleExistente.getEstadoCacao() != datos.estadoCacao()) detalleExistente.setEstadoCacao(datos.estadoCacao());
+	    if (detalleExistente.getCantidad() != datos.cantidad()) detalleExistente.setCantidad(datos.cantidad());
+	    if (detalleExistente.getPeso() != datos.peso()) detalleExistente.setPeso(datos.peso());
+	    repository.save(detalleExistente);
+	    return new DatosDetalleResponse(200, "Detalle del pedido actualizado correctamente");
+	}
+
+	
 	public List<DatosDetalleDetallePedido> obtenerPorPedidoId(Long idPedido) {
 		var detalle = obtenerDetallePedidoById(idPedido);
 		return detalle.stream().map(d -> detalleDetallePedido(d)).toList();

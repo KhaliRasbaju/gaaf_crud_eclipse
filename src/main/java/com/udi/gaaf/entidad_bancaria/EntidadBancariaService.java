@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.udi.gaaf.common.DatosDetalleCommon;
 import com.udi.gaaf.common.DatosDetalleResponse;
 import com.udi.gaaf.common.DatosRegistrarCommon;
+import com.udi.gaaf.errors.BadRequestException;
 import com.udi.gaaf.errors.NotFoundException;
 
 @Service
@@ -52,6 +53,9 @@ public class EntidadBancariaService {
 	
 	public DatosDetalleResponse eliminarPorId(Long id) {
 		var entidad = obtenerEntidadBancariaPorId(id);
+		if(entidad.getCuentas() != null) {
+			throw new BadRequestException("No se puede eliminar la entidad bancaria. Existe cuentas asociadas a esta entidad");
+		}
 		repository.delete(entidad);
 		return new DatosDetalleResponse(200, "Entidad Bancaria eliminada correctamente");
 	}

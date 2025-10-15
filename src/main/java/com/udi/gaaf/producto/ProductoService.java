@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.udi.gaaf.common.DatosDetalleResponse;
+import com.udi.gaaf.errors.BadRequestException;
 import com.udi.gaaf.errors.NotFoundException;
 
 @Service
@@ -65,6 +66,9 @@ public class ProductoService {
 	
 	public DatosDetalleResponse eliminarPorId(Long id) {
 		var producto = obtenerProductoPorId(id);
+		if(producto.getDetallePedidos() != null || producto.getInventarios() != null) {
+			throw new BadRequestException("No se puede eliminar ya hay productos asociados");
+		}
 		repository.delete(producto);
 		return new DatosDetalleResponse(200, "Producto eliminado correctamente");
 	}

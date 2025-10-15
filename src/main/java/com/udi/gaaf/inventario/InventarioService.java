@@ -1,11 +1,12 @@
 package com.udi.gaaf.inventario;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.udi.gaaf.bodega.BodegaService;
+import com.udi.gaaf.errors.BadRequestException;
 import com.udi.gaaf.errors.NotFoundException;
 import com.udi.gaaf.producto.ProductoService;
 
@@ -32,25 +33,28 @@ public class InventarioService {
 	
 	
 	
-	public DatosDetalleInventario crear(DatosRegistrarInventario datos) {
+	public DatosDetalleInventario crear(DatosRegistrarInventario datos, Boolean eliminar) {
+		
 		var producto = productoService.obtenerProductoPorId(datos.idProducto());
 		var bodega = bodegaService.obtenerBodegaPorId(datos.idBodega());
+		if(eliminar) {
+			var buscar = new DatosBuscarInventarioIds(bodega.getId(), producto.getId());
+			var inventario = obtenerPorInventarioIds(buscar);
+			if(inventario.getCantidad() < datos.cantidad()) {
+				throw new BadRequestException("No se puede sacar esa cantidad ya que solo hay: " + inventario.getCantidad() + " revisa el stock");
+			}
+			var cantidad = inventario.getCantidad() - datos.cantidad();
+			inventario.setFecha(datos.fecha());
+			inventario.setCantidad(cantidad);
+			repository.save(inventario);
+			return detalleInventario(inventario);
+		}
+		
 		var inventario = new Inventario(datos, bodega, producto);
 		var nuevoInventario = repository.save(inventario);
 		return detalleInventario(nuevoInventario);
 	}
 	
-	public List<Inventario> obtenerInventarioPorBodegaId(Long id) {
-		var inventarios =  repository.findByBodegaId(id);
-		if(inventarios.isEmpty()) {
-			throw new NotFoundException("No hay inventario por el id de la bodega: " + id);
-		}
-		return inventarios;
-	}
 	
-	public List<DatosDetalleInventario> obtenerTodos(){
-		var inventarios = repository.findAll();
-		return inventarios.stream().map((i) -> detalleInventario(i) ).toList();
-	}
 	
 }

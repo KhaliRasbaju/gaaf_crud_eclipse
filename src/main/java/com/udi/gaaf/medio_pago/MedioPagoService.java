@@ -41,6 +41,15 @@ public class MedioPagoService {
 		return detalleMedioPago(nuevoMedio);
 	}
 	
+	public MedioPago editar(DatosRegistrarMedioPago datos, Long id) {
+		var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
+		var medio = repository.findByPedidoId(id).orElseThrow(() -> new NotFoundException("Medio de pago no encontrado por el producto id: "+id));
+		if(medio.getReferencia() != datos.referencia()) medio.setReferencia(datos.referencia());
+		if(medio.getMetodo().getId() != datos.idMetodoPago()) medio.setMetodo(metodo);
+		var medioActualizado = repository.save(medio);
+		return medioActualizado;
+	}
+	
 	public DatosDetalleMedioPago obtenerPorId(Long id) {
 		var medio = obtenerMedioPagoPorId(id);
 		return detalleMedioPago(medio);
@@ -48,6 +57,11 @@ public class MedioPagoService {
 	
 	public DatosDetalleResponse eliminarPorid(Long id) {
 		var medio = obtenerMedioPagoPorId(id);
+		
+		if(medio.getPedido() != null) {
+			throw new BadRequestException("No se puede eliminar ya hay un pedido asociado a este medio de pago");
+		}
+		
 		repository.delete(medio);
 		return new DatosDetalleResponse(200, "Medio de pago borrado correctamenta");
 	}

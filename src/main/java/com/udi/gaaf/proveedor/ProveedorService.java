@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.udi.gaaf.common.DatosDetalleResponse;
 import com.udi.gaaf.cuenta.CuentaService;
 import com.udi.gaaf.cuenta.DatosDetalleCuenta;
 import com.udi.gaaf.errors.BadRequestException;
@@ -79,6 +80,30 @@ public class ProveedorService {
 		return detalleProveedor(proveedorFinal, true);
 	}
 	
+	public DatosDetalleResponse editar(DatosRegistrarProveedor datos, Long nit) {
+		var proveedor = obtenerProveedorPorNit(nit);
+		if(proveedor.getNombre() != datos.nombre()) proveedor.setNombre(datos.nombre());
+		if(proveedor.getCorreo() != datos.correo()) proveedor.setCorreo(datos.correo());
+		if(proveedor.getTelefono() != datos.telefono()) proveedor.setTelefono(datos.telefono());
+		if(proveedor.getNit() != datos.nit()) proveedor.setNit(nit);
+		var proveedorActualizado = repository.save(proveedor);
+		cuentaService.editar(datos.cuenta(), nit);
+		ubicacionService.editar(datos.ubicacion(), proveedorActualizado);
+		return new DatosDetalleResponse(200, "Proveedor actualizado");
+	}
+	
+	public DatosDetalleResponse cambiarEstado(Long nit) {
+		var proveedor = obtenerProveedorPorNit(nit);
+		if(proveedor.getActivo()) {
+			proveedor.setActivo(false);
+		} else {
+			proveedor.setActivo(true);
+		}
+		
+		return new DatosDetalleResponse(200, "Estado del proveedor cambiado correctamente");
+	}
+	
+	
 	public DatosDetalleProveedor obtenerPorNit(Long nit) {
 		var proveedor = obtenerProveedorPorNit(nit);
 		return detalleProveedor(proveedor, true);	
@@ -90,6 +115,21 @@ public class ProveedorService {
 		return proveedores.stream()
 				.map(p -> detalleProveedor(p, false))
 				.toList();
+	}
+	
+	public DatosDetalleResponse eliminarPorNit(Long nit) {
+		var proveedor = obtenerProveedorPorNit(nit);
+		
+		if(proveedor.getPedidos() != null) {
+			throw new BadRequestException("No se puede eliminar proveedor ya tiene pedidos asociados. Desactiva al proveedor.");
+		}
+		ubicacionService.eliminarPorId(proveedor.getUbicaciones().getId());
+		proveedor.getCuentas().stream().forEach(c -> ubicacionService.eliminarPorId(c.getId()));
+		
+		
+		repository.delete(proveedor);
+		return new DatosDetalleResponse(200, "Proveedor eliminado correctamente");
+		
 	}
 	
 }

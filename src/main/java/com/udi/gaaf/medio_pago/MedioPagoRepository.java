@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MedioPagoRepository extends JpaRepository<MedioPago, Long>{
 	Optional<MedioPago> findByReferencia(String referencia);
+	
+	Optional<MedioPago> findByPedidoId(Long idPedido);
+	
 }
