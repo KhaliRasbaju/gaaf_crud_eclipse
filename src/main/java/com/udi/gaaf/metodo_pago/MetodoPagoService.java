@@ -42,11 +42,11 @@ public class MetodoPagoService {
 	}
 	
 	
-	public DatosDetalleCommon editar(DatosRegistrarCommon datos, Long id) {
+	public DatosDetalleResponse editar(DatosRegistrarCommon datos, Long id) {
 		var metodo = obtenerMetodoPagoPorId(id);
 		if(datos.nombre() != metodo.getNombre()) metodo.setNombre(datos.nombre());
 		var metodoActualizado = repository.save(metodo);
-		return detalleMetodoPago(metodoActualizado);
+		return new DatosDetalleResponse(200, "Metodo de pago actualizado correctamente");
 	}
 	
 	public DatosDetalleCommon obtenerPorId(Long id) {

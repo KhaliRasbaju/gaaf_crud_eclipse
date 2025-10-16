@@ -34,13 +34,13 @@ public class ProductoService {
 	}
 	
 	@Transactional
-	public DatosDetalleProducto editar(DatosRegistrarProducto datos, Long id) {
+	public DatosDetalleResponse editar(DatosRegistrarProducto datos, Long id) {
 		var producto = obtenerProductoPorId(id);
 		if(datos.nombre()!= producto.getNombre()) producto.setNombre(datos.nombre());
 		if(datos.descripcion()!= producto.getDescripcion()) producto.setDescripcion(datos.descripcion());
 		if(datos.tipo() != producto.getTipo()) producto.setTipo(datos.tipo());
 		var productoActualizado = repository.save(producto);
-		return detalleProducto(productoActualizado);
+		return new DatosDetalleResponse(200, "Producto actualizado correctamente");
 	}
 	
 

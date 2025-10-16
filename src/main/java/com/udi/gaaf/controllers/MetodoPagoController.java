@@ -41,7 +41,7 @@ public class MetodoPagoController {
 	}
 	
 	@PutMapping("/editar/{id}")
-	public  ResponseEntity<DatosDetalleCommon> editar(@RequestBody(required = false) @Valid DatosRegistrarCommon datos, @PathVariable Long id) {
+	public  ResponseEntity<DatosDetalleResponse> editar(@RequestBody(required = false) @Valid DatosRegistrarCommon datos, @PathVariable Long id) {
 		if(datos == null || id == null) {
 			throw new NotRequestBodyException("Se requiere body y el id del metodo de pago");
 		}

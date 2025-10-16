@@ -40,7 +40,7 @@ public class BodegaController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<DatosDetalleBodega> editar(@RequestBody(required = false) @Valid  DatosRegistrarBodega datos, @PathVariable Long id) {
+	public ResponseEntity<DatosDetalleResponse> editar(@RequestBody(required = false) @Valid  DatosRegistrarBodega datos, @PathVariable Long id) {
 		if(datos == null || id == null) {
 			throw new NotRequestBodyException("Se requiere body");
 		}

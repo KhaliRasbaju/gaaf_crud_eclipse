@@ -26,7 +26,7 @@ public class CuentaController {
 
 	
 	@PutMapping("/editar/{id}")
-	public ResponseEntity<DatosDetalleCuenta> editar(@RequestBody @Valid  DatosRegistrarCuenta datos, @PathVariable Long id) {
+	public ResponseEntity<DatosDetalleResponse> editar(@RequestBody @Valid  DatosRegistrarCuenta datos, @PathVariable Long id) {
 		if(datos == null || id == null) {
 			throw new NotRequestBodyException("Se requiere body y el id");
 		}

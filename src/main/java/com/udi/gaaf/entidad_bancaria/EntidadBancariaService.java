@@ -34,11 +34,11 @@ public class EntidadBancariaService {
 	}
 	
 	@Transactional
-	public DatosDetalleCommon editar(Long id, DatosRegistrarCommon datos) {
+	public DatosDetalleResponse editar(Long id, DatosRegistrarCommon datos) {
 		var entidad  = obtenerEntidadBancariaPorId(id);
 		if(datos.nombre() != null) entidad.setNombre(datos.nombre());
 		repository.save(entidad);
-		return detalleEntidad(entidad);
+		return new DatosDetalleResponse(200, "Entidad bancaria actualizada correctamente");
 	}
 	
 	public DatosDetalleCommon obtenerPorId(Long id) {

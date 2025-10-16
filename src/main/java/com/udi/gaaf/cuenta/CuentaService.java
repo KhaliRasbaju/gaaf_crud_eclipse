@@ -47,14 +47,14 @@ public class CuentaService {
 	}
 	
 	@Transactional
-	public DatosDetalleCuenta editar(DatosRegistrarCuenta datos, Long nit) {
+	public DatosDetalleResponse editar(DatosRegistrarCuenta datos, Long nit) {
 		var entidad = datos.idEntidad() != null ? entidadBancariaService.obtenerEntidadBancariaPorId(datos.idEntidad()) : null;
 		var cuenta = repository.findByProveedorNit(nit).orElseThrow(()-> new NotFoundException("Cuenta no existe por el nit: "+ nit));
 		if(entidad!= null) cuenta.setEntidad(entidad);
 		if(cuenta.getNumero() != datos.numero()) cuenta.setNumero(datos.numero());
 		if(cuenta.getTipo() != datos.tipo()) cuenta.setTipo(datos.tipo());
-		var cuentaActualizada = repository.save(cuenta);
-		return detalleCuenta(cuentaActualizada, cuentaActualizada.getEntidad().getId());
+		repository.save(cuenta);
+		return new DatosDetalleResponse(200, "Cuenta actualizada correctamente");
 	}
 	
 	

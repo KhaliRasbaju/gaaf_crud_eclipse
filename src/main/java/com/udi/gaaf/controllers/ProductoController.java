@@ -41,7 +41,7 @@ public class ProductoController {
 	}
 	
 	@PutMapping("/editar/{id}")
-	public ResponseEntity<DatosDetalleProducto> editar(@RequestBody(required = false) @Valid  DatosRegistrarProducto datos, @PathVariable Long id) {
+	public ResponseEntity<DatosDetalleResponse> editar(@RequestBody(required = false) @Valid  DatosRegistrarProducto datos, @PathVariable Long id) {
 		if(datos == null || id == null) {
 			throw new NotRequestBodyException("Se requiere body y el id del producto");
 		}

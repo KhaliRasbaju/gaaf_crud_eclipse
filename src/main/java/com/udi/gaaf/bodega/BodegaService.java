@@ -27,15 +27,16 @@ public class BodegaService {
 	public DatosDetalleBodega crear(DatosRegistrarBodega datos) {
 		var bodega = new Bodega(datos); 
 		var bodegaNueva = repository.save(bodega);
-		return  detalleBodega(bodegaNueva);	}
+		return  detalleBodega(bodegaNueva);	
+	}
 	
 	@Transactional
-	public DatosDetalleBodega editar(DatosRegistrarBodega datos, Long id) {
+	public DatosDetalleResponse editar(DatosRegistrarBodega datos, Long id) {
 		var bodega = obtenerBodegaPorId(id);
 		if(datos.nombre() != null) bodega.setNombre(datos.nombre());
 		if(datos.ubicacion() != null) bodega.setUbicacion(datos.ubicacion());
 		repository.save(bodega);
-		return  detalleBodega(bodega);
+		return new DatosDetalleResponse(200, "Bodega actualizada correctamente");
 	}
 	
 	

@@ -41,7 +41,7 @@ public class EntidadBancariaController {
 	
 	
 	@PutMapping("/editar/{id}")
-	public ResponseEntity<DatosDetalleCommon> editar(@PathVariable Long id, @RequestBody(required = false) @Valid DatosRegistrarCommon datos) {
+	public ResponseEntity<DatosDetalleResponse> editar(@PathVariable Long id, @RequestBody(required = false) @Valid DatosRegistrarCommon datos) {
 		if(datos == null || id == null) {
 			throw new NotRequestBodyException("Se requiere body y el id de la entidad bancaria");
 		}
