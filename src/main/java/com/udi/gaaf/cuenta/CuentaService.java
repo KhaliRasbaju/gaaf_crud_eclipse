@@ -23,19 +23,20 @@ public class CuentaService {
 	private EntidadBancariaService entidadBancariaService;
 	
 	
+
 	
-	public Cuenta obtenerCuentaPorId(Long id) {
-		return repository.findById(id).orElseThrow(() -> new NotFoundException("Cuenta no encontrada por el id: "+id.toString()));
-	}
-	
-	private DatosDetalleCuenta detalleCuenta(Cuenta cuenta, Long id_entidad) {
+	private DatosDetalleCuenta detalleCuenta(Cuenta cuenta, Long idEntidad) {
 		
-		var detalleEntidad = entidadBancariaService.obtenerPorId(id_entidad);
+		var detalleEntidad = entidadBancariaService.obtenerPorId(idEntidad);
 		
 		return new DatosDetalleCuenta(cuenta.getId(),cuenta.getNumero(), cuenta.getTipo(), detalleEntidad);
 		
 	}
 	
+	
+	public Cuenta obtenerCuentaPorId(Long id) {
+		return repository.findById(id).orElseThrow(() -> new NotFoundException("Cuenta no encontrada por el id: "+id.toString()));
+	}
 	
 	
 	public DatosDetalleCuenta crear(DatosRegistrarCuenta datos, Proveedor proveedor) {
