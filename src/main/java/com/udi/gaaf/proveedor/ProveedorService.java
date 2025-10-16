@@ -120,7 +120,7 @@ public class ProveedorService {
 	public DatosDetalleResponse eliminarPorNit(Long nit) {
 		var proveedor = obtenerProveedorPorNit(nit);
 		
-		if(proveedor.getPedidos() != null) {
+		if(!proveedor.getPedidos().isEmpty()) {
 			throw new BadRequestException("No se puede eliminar proveedor ya tiene pedidos asociados. Desactiva al proveedor.");
 		}
 		ubicacionService.eliminarPorId(proveedor.getUbicaciones().getId());

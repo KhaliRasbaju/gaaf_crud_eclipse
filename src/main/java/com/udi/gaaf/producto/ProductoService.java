@@ -66,7 +66,7 @@ public class ProductoService {
 	
 	public DatosDetalleResponse eliminarPorId(Long id) {
 		var producto = obtenerProductoPorId(id);
-		if(producto.getDetallePedidos() != null || producto.getInventarios() != null) {
+		if(!producto.getDetallePedidos().isEmpty() || !producto.getInventarios().isEmpty()) {
 			throw new BadRequestException("No se puede eliminar ya hay productos asociados");
 		}
 		repository.delete(producto);

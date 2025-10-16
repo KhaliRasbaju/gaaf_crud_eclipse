@@ -57,7 +57,7 @@ public class BodegaService {
 	public DatosDetalleResponse eliminarPorId(Long id) {
 		var bodega  = obtenerBodegaPorId(id);
 		
-		if(bodega.getInventarios().isEmpty()) {
+		if(!bodega.getInventarios().isEmpty()) {
 			throw new BadRequestException("No se puede eliminar la bodega ya que hay inventario");
 		}
 		
