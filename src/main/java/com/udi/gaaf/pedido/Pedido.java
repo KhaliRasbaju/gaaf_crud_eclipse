@@ -62,6 +62,7 @@ public class Pedido {
 	
 	public Pedido(DatosRegistrarPedido datos, Proveedor proveedor, MedioPago medio) {
 		this.fechaPedido = datos.fechaPedido();
+		this.recibido = false;
 		this.valor = datos.valor();
 		this.proveedor = proveedor;
 		this.pago = medio;

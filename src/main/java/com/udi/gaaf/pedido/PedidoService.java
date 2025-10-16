@@ -72,7 +72,6 @@ public class PedidoService {
 		if(pedido.getValor() != datos.valor()) pedido.setValor(datos.valor());
 		if(pedido.getProveedor().getNit() != datos.nitProveedor()) pedido.setProveedor(proveedor);
 		if(pedido.getFechaPedido() != datos.fechaPedido()) pedido.setFechaPedido(datos.fechaPedido());
-		pedido.setRecibido(false);
 		for (var detalleNuevo : datos.detalle()) {
 		    var detalleExistente = pedido.getDetallePedidos().stream()
 		        .filter(d -> d.getProducto().getId().equals(detalleNuevo.idProducto()))
