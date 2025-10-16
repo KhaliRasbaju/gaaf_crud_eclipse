@@ -114,7 +114,7 @@ public class PedidoService {
 	public DatosDetalleResponse eliminarPorId(Long id) {
 		var pedido = obtenerPedidoPorId(id);
 		validarRecibirPedido(pedido);
-		if(pedido.getTransaccionInventarios() != null) {
+		if(pedido.getTransaccionInventarios().isEmpty()) {
 			throw new BadRequestException("No se pude eliminar ya hay transacciones asociadas");
 		}
 		detallePedidoService.eliminarPorPedidoId(pedido.getId());
