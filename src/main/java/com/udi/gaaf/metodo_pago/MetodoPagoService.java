@@ -62,7 +62,7 @@ public class MetodoPagoService {
 	public DatosDetalleResponse eliminarPorId(Long id) {
 		var metodo = obtenerMetodoPagoPorId(id);
 		
-		if(metodo.getMedio() != null) {
+		if(!metodo.getMedio().isEmpty()) {
 			throw new BadRequestException("No se puede eliminar hay asociado medio de pagos con ese metodo");
 		}
 		

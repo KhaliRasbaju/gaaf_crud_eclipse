@@ -53,7 +53,7 @@ public class EntidadBancariaService {
 	
 	public DatosDetalleResponse eliminarPorId(Long id) {
 		var entidad = obtenerEntidadBancariaPorId(id);
-		if(entidad.getCuentas() != null) {
+		if(!entidad.getCuentas().isEmpty()) {
 			throw new BadRequestException("No se puede eliminar la entidad bancaria. Existe cuentas asociadas a esta entidad");
 		}
 		repository.delete(entidad);
