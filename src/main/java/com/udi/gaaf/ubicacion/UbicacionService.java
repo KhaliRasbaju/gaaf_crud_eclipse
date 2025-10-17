@@ -48,6 +48,7 @@ public class UbicacionService {
 		var ubicacion = obtenerUbicacionPorId(proveedor.getUbicaciones().getId());
 		if(ubicacion.getDireccion() != datos.direccion()) ubicacion.setDireccion(datos.direccion());
 		if(ubicacion.getMunicipio() != municipio) ubicacion.setMunicipio(municipio);
+		repository.save(ubicacion);
 		return detalleUbicacion(ubicacion);
 	}
 	
