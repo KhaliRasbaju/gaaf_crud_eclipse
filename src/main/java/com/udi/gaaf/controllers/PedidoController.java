@@ -46,7 +46,7 @@ public class PedidoController {
 		return ResponseEntity.ok(detalle);
 	}
 	
-	@GetMapping("/recibir/{id}")
+	@PutMapping("/recibir/{id}")
 	public  ResponseEntity<DatosDetalleResponse> recibir(@PathVariable Long id) {
 		if(id == null) {
 			throw new NotRequestBodyException("Se requiere el id del pedido");
