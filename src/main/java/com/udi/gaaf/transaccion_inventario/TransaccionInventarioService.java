@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.udi.gaaf.common.DatosDetalleResponse;
 import com.udi.gaaf.errors.NotFoundException;
 import com.udi.gaaf.inventario.DatosBuscarInventarioIds;
 import com.udi.gaaf.inventario.DatosRegistrarInventario;
@@ -35,7 +36,7 @@ public class TransaccionInventarioService {
 	
 
 	@Transactional
-	public DatosDetalleTransaccion crear(DatosRegistrarTransaccion datos) {
+	public DatosDetalleResponse crear(DatosRegistrarTransaccion datos) {
 		DatosRegistrarInventario datosInventario = new DatosRegistrarInventario(LocalDateTime.now(), datos.cantidad(), datos.idProducto(), datos.idBodega());
 		
 		if(datos.tipo().equals(TipoTransaccion.ENTRADA)) {			
@@ -51,7 +52,7 @@ public class TransaccionInventarioService {
                 : null;
 		var transaccion = new TransaccionInventario(datos, inventario, pedido);
 		var nuevaTransaccion = repository.save(transaccion);
-		return detalleTransaccion(nuevaTransaccion);
+		return new DatosDetalleResponse(200, "Transaccion creada correctamente");
 	}
 	
 }
