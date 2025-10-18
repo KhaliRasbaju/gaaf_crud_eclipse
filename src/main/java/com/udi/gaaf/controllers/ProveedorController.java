@@ -72,7 +72,7 @@ public class ProveedorController {
 	}
 	
 	@DeleteMapping("/{nit}")
-	public ResponseEntity<DatosDetalleResponse> eliminarPorNit(Long nit){
+	public ResponseEntity<DatosDetalleResponse> eliminarPorNit(@PathVariable Long nit){
 		var detalle = service.eliminarPorNit(nit);
 		return ResponseEntity.ok(detalle);
 	}
