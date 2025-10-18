@@ -48,7 +48,7 @@ public class Proveedor {
 	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<Pedido> pedidos;
 	
-	@OneToOne(mappedBy = "proveedor", orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "proveedor", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Ubicacion ubicaciones;
 	
 	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
