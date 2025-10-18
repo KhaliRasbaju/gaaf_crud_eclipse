@@ -117,7 +117,6 @@ public class PedidoService {
 		if(!pedido.getTransaccionInventarios().isEmpty()) {
 			throw new BadRequestException("No se pude eliminar ya hay transacciones asociadas");
 		}
-		detallePedidoService.eliminarPorPedidoId(pedido.getId());
 		repository.delete(pedido);
 		return new DatosDetalleResponse(200, "Pedido eliminado correctamente");
 	}
