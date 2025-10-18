@@ -26,7 +26,7 @@ public class DetallePedidoService {
 	}
 
 	private List<DetallePedido> obtenerDetallePedidoById(Long idPedido) {
-		var detallePedidos = repository.findByPedido_IdPedido(idPedido);
+		var detallePedidos = repository.findByPedido_Id(idPedido);
 		if(detallePedidos.isEmpty()) {
 			throw new NotFoundException("No hay detalle del pedido por ese pedido");
 		}
