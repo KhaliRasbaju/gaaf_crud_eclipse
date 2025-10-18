@@ -124,7 +124,11 @@ public class ProveedorService {
 			throw new BadRequestException("No se puede eliminar proveedor ya tiene pedidos asociados. Desactiva al proveedor.");
 		}
 		ubicacionService.eliminarPorId(proveedor.getUbicaciones().getId());
-		proveedor.getCuentas().stream().forEach(c -> ubicacionService.eliminarPorId(c.getId()));
+		System.out.println(proveedor.getUbicaciones().getId());
+		proveedor.getCuentas().stream().forEach(c -> {
+			System.out.println(c.getId());
+			ubicacionService.eliminarPorId(c.getId());
+		});
 		
 		
 		repository.delete(proveedor);
