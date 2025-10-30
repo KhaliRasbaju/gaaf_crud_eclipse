@@ -18,6 +18,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Entidad que representa la ubicación física de un proveedor.
+ * Está relacionada con un municipio y un proveedor específico.
+ */
 @Entity
 @Table(name = "ubicacion_proveedor")
 @Getter
@@ -40,7 +44,14 @@ public class Ubicacion {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_municipio", nullable = false)
 	private Municipio municipio;
-	
+
+	/**
+	 * Constructor que inicializa una ubicación con los datos proporcionados.
+	 *
+	 * @param datos      Datos necesarios para registrar la ubicación.
+	 * @param municipio  Municipio al que pertenece la ubicación.
+	 * @param proveedor  Proveedor asociado a la ubicación.
+	 */
 	public Ubicacion(DatosRegistrarUbicacion datos, Municipio municipio, Proveedor proveedor) {
 		this.direccion = datos.direccion();
 		this.municipio = municipio;

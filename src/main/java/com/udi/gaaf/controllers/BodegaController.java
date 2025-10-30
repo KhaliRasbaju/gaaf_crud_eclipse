@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controlador REST para la gestión de bodegas.
+ * 
+ * <p>Proporciona endpoints para crear, editar, obtener y eliminar registros de bodegas.</p>
+ */
 @RestController
 @RequestMapping("/bodega")
 public class BodegaController {
@@ -26,8 +31,13 @@ public class BodegaController {
 	@Autowired
 	private BodegaService service;
 	
-	
-	
+	/**
+	 * Crea una nueva bodega en el sistema.
+	 *
+	 * @param datos objeto {@link DatosRegistrarBodega} con la información necesaria para registrar una bodega.
+	 * @return {@link ResponseEntity} con el detalle de la bodega creada y el código HTTP { @code 201 (Created) }.
+	 * @throws NotRequestBodyException si el cuerpo de la solicitud es nulo.
+	 */
 	@PostMapping("/crear")
 	public ResponseEntity<DatosDetalleBodega> crear(@RequestBody(required = false) @Valid DatosRegistrarBodega datos) {
 		
@@ -39,8 +49,16 @@ public class BodegaController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(detalle);
 	}
 	
+	/**
+	 * Edita los datos de una bodega existente.
+	 *
+	 * @param datos objeto {@link DatosRegistrarBodega} con los nuevos datos de la bodega.
+	 * @param id identificador único de la bodega a editar.
+	 * @return {@link ResponseEntity} con el resultado de la operación y el código HTTP { @code 200 (OK) }.
+	 * @throws NotRequestBodyException si el cuerpo de la solicitud o el id son nulos.
+	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<DatosDetalleResponse> editar(@RequestBody(required = false) @Valid  DatosRegistrarBodega datos, @PathVariable Long id) {
+	public ResponseEntity<DatosDetalleResponse> editar(@RequestBody(required = false) @Valid DatosRegistrarBodega datos, @PathVariable Long id) {
 		if(datos == null || id == null) {
 			throw new NotRequestBodyException("Se requiere body");
 		}
@@ -48,8 +66,13 @@ public class BodegaController {
 		return ResponseEntity.ok(detalle);
 	}
 	
-	
-	
+	/**
+	 * Obtiene los datos detallados de una bodega según su identificador.
+	 *
+	 * @param id identificador único de la bodega.
+	 * @return {@link ResponseEntity} con los datos de la bodega y el código HTTP { @code 200 (OK) }.
+	 * @throws NotRequestBodyException si el id es nulo.
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<DatosDetalleBodega> obtenerPorId(@PathVariable Long id) {
 		
@@ -61,13 +84,24 @@ public class BodegaController {
 		return ResponseEntity.ok(detalle);
 	}
 	
+	/**
+	 * Obtiene la lista de todas las bodegas registradas en el sistema.
+	 *
+	 * @return {@link ResponseEntity} con la lista de bodegas y el código HTTP { @code 200 (OK) }.
+	 */
 	@GetMapping
 	public ResponseEntity<List<DatosDetalleBodega>> obtenerTodos(){
 		var detalle = service.obtenerTodos();
 		return ResponseEntity.ok(detalle);
 	}
 	
-	
+	/**
+	 * Elimina una bodega existente según su identificador.
+	 *
+	 * @param id identificador único de la bodega a eliminar.
+	 * @return {@link ResponseEntity} con el resultado de la eliminación y el código HTTP { @code 200 (OK) }.
+	 * @throws NotRequestBodyException si el id es nulo.
+	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<DatosDetalleResponse> eliminarPorId(@PathVariable Long id) {
 		if(id == null) {

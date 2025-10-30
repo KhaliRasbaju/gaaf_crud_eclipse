@@ -2,10 +2,8 @@ package com.udi.gaaf.metodo_pago;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import com.udi.gaaf.common.DatosRegistrarCommon;
 import com.udi.gaaf.medio_pago.MedioPago;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +16,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+/**
+ * Entidad que representa un método de pago dentro del sistema.
+ * Contiene el nombre del método y los medios de pago asociados.
+ */
 @Entity
 @Table(name = "metodo_pago")
 @Getter
@@ -26,20 +29,26 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class MetodoPago {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_metodo_pago")
-	private Long id;
-	
-	private String nombre;
-	
-	@OneToMany(mappedBy = "metodo")
-	private Set<MedioPago> medio;
-	
-	
-	public MetodoPago(DatosRegistrarCommon datos) {
-		this.nombre = datos.nombre();
-		this.medio = new HashSet<MedioPago>();
-	}
-	
+    /** Identificador único del método de pago */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_metodo_pago")
+    private Long id;
+
+    /** Nombre del método de pago (ejemplo: Efectivo, Tarjeta, Transferencia) */
+    private String nombre;
+
+    /** Relación uno a muchos con los medios de pago que utilizan este método */
+    @OneToMany(mappedBy = "metodo")
+    private Set<MedioPago> medio;
+
+    /**
+     * Constructor que crea un método de pago a partir de los datos de registro.
+     *
+     * @param datos Datos que contienen el nombre del método de pago.
+     */
+    public MetodoPago(DatosRegistrarCommon datos) {
+        this.nombre = datos.nombre();
+        this.medio = new HashSet<>();
+    }
 }

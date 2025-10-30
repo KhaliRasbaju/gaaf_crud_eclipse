@@ -18,6 +18,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Entidad que representa una bodega dentro del sistema de gestión.
+ * <p>
+ * Una bodega contiene información básica como su nombre y ubicación,
+ * además de mantener una relación con los inventarios almacenados en ella.
+ * </p>
+ * 
+ * <p><b>Relaciones:</b></p>
+ * <ul>
+ *   <li>Una {@code Bodega} puede tener múltiples {@link Inventario} asociados.</li>
+ * </ul>
+ * 
+ * @see Inventario
+ */
 @Entity
 @Table(name = "bodega")
 @Getter
@@ -26,19 +40,36 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 public class Bodega {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_bodega")
-	Long id;
-	String nombre;
-	String ubicacion;
-	@OneToMany(mappedBy = "bodega", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Inventario> inventarios;
-	
-	
-	public Bodega(DatosRegistrarBodega datos) {
-		this.nombre = datos.nombre();
-		this.ubicacion = datos.ubicacion();
-		this.inventarios = new ArrayList<Inventario>();
-	}
+    /** Identificador único de la bodega. */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_bodega")
+    Long id;
+
+    /** Nombre asignado a la bodega. */
+    String nombre;
+
+    /** Ubicación física de la bodega. */
+    String ubicacion;
+
+    /**
+     * Lista de inventarios asociados a esta bodega.
+     * <p>
+     * La relación es de uno a muchos y se maneja en cascada, 
+     * eliminando también los inventarios si la bodega es removida.
+     * </p>
+     */
+    @OneToMany(mappedBy = "bodega", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Inventario> inventarios;
+
+    /**
+     * Constructor para registrar una nueva bodega a partir de los datos de entrada.
+     * 
+     * @param datos datos necesarios para crear una bodega, incluyendo nombre y ubicación
+     */
+    public Bodega(DatosRegistrarBodega datos) {
+        this.nombre = datos.nombre();
+        this.ubicacion = datos.ubicacion();
+        this.inventarios = new ArrayList<>();
+    }
 }
