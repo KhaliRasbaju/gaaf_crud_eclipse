@@ -3,6 +3,8 @@ package com.udi.gaaf.vista_reporte_compras;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,7 +24,7 @@ public class VistaCompraService {
 	 * 
 	 * @return Lista con todos los registros de la vista {@link VistaCompra}.
 	 */
-	public List<VistaCompra> obtenerReporte() {
-		return repository.findAll();
+	public Page<VistaCompra> obtenerReporte(Pageable paginacion) {
+		return repository.findAll(paginacion);
 	}
 }
