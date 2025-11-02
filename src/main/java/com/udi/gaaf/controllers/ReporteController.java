@@ -1,14 +1,16 @@
 package com.udi.gaaf.controllers;
 
-import java.util.List;
-
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.udi.gaaf.vista_pedidos_proveedor.VistaPedidosProveedor;
 import com.udi.gaaf.vista_pedidos_proveedor.VistaPedidosProveedorService;
 import com.udi.gaaf.vista_reporte_compras.VistaCompra;
@@ -49,8 +51,24 @@ public class ReporteController {
      * <p>Retorna un código HTTP { @code 200 (OK) } si la operación es exitosa.</p>
      */
     @GetMapping("/compra")
-    public ResponseEntity<List<VistaCompra>> obtenerReporteCompra(Pageable paginacion) {
-        var detalle = compraService.obtenerReporte(paginacion);
+    public ResponseEntity<Page<VistaCompra>> obtenerReporteCompra(
+    		
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fechaPedido,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fechaEntrega,
+    		@RequestParam(required = false) String estado,
+    		@RequestParam(required = false) String producto,
+    		@RequestParam(required = false) Integer cantidad,
+    		@RequestParam(required = false) Double valorPedido,
+    		
+    		Pageable paginacion) {
+        var detalle = compraService.obtenerReporte(        		
+        		fechaPedido, 
+        		fechaEntrega,
+        		estado, 
+        		producto,
+        		cantidad,
+        		valorPedido,        		
+        		paginacion);
         System.out.println(detalle);
         return ResponseEntity.ok(detalle);
     }
@@ -63,8 +81,20 @@ public class ReporteController {
      * <p>Retorna un código HTTP { @code 200 (OK) } si la operación es exitosa.</p>
      */
     @RequestMapping("/pedido-proveedor")
-    public ResponseEntity<List<VistaPedidosProveedor>> obtenerReportePedidosProveedor(Pageable paginacion) {
-        var detalle = pedidosProveedorService.obtenerReporte(paginacion);
+    public ResponseEntity<Page<VistaPedidosProveedor>> obtenerReportePedidosProveedor(
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fechaPedido,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fechaEntrega,
+    		@RequestParam(required = false) String estado,
+    		@RequestParam(required = false) String metodoPago,
+    		@RequestParam(required = false) Double valorPedido,
+    		Pageable paginacion) {
+        var detalle = pedidosProveedorService.obtenerReporte(
+        		fechaPedido,
+        		fechaEntrega,
+        		estado,
+        		metodoPago,
+        		valorPedido,        		
+        		paginacion);
         return ResponseEntity.ok(detalle);
     }
 
@@ -76,8 +106,18 @@ public class ReporteController {
      * <p>Retorna un código HTTP { @code 200 (OK) } si la operación es exitosa.</p>
      */
     @GetMapping("/inventario-movimiento")
-    public ResponseEntity<List<VistaInventarioMovimiento>> obtenerReporteInventarioMovimiento(Pageable paginacion) {
-        var detalle = inventarioMovimientoService.obtenerReporte(paginacion);
+    public ResponseEntity<Page<VistaInventarioMovimiento>> obtenerReporteInventarioMovimiento(
+    		@RequestParam(required = false) String producto,
+    		@RequestParam(required = false) String tipo,
+    		@RequestParam(required = false) Integer cantidad,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fecha,
+    		Pageable paginacion) {
+        var detalle = inventarioMovimientoService.obtenerReporte(
+        		producto,
+        		tipo,
+        		cantidad,
+        		fecha,
+        		paginacion);
         return ResponseEntity.ok(detalle);
     }
 
@@ -89,8 +129,13 @@ public class ReporteController {
      * <p>Retorna un código HTTP { @code 200 (OK) } si la operación es exitosa.</p>
      */
     @GetMapping("/producto-bodega")
-    public ResponseEntity<List<VistaInventarioProductosBodega>> obtenerReporteInventarioProductosBodega(Pageable paginacion) {
-        var detalle = inventarioProductosBodegaService.obtenerReporte(paginacion);
+    public ResponseEntity<Page<VistaInventarioProductosBodega>> obtenerReporteInventarioProductosBodega(
+    		@RequestParam(required = false) String producto,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fecha,
+    		@RequestParam(required = false) Integer cantidad,
+    		Pageable paginacion
+    		) {
+        var detalle = inventarioProductosBodegaService.obtenerReporte(producto, fecha, cantidad,paginacion);
         return ResponseEntity.ok(detalle);
     }
 }

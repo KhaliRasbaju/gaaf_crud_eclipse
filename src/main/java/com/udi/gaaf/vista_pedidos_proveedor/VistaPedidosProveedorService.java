@@ -1,6 +1,6 @@
 package com.udi.gaaf.vista_pedidos_proveedor;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,10 +24,19 @@ public class VistaPedidosProveedorService {
 	 * 
 	 * @return Lista con todos los registros de la vista {@link VistaPedidosProveedor}.
 	 */
-	public List<VistaPedidosProveedor> obtenerReporte(Pageable paginacion) {
-		
-		Page<VistaPedidosProveedor> vista = repository.findAll(paginacion);
-		
-		return vista.getContent();
+	public Page<VistaPedidosProveedor> obtenerReporte(
+			LocalDateTime fechaPedido,
+			LocalDateTime fechaEntrega,
+			String estado,
+			String metodoPago,
+			Double valorPedido,
+			Pageable paginacion) {
+		return repository.findAllWithFilters(
+				fechaPedido,
+				fechaEntrega,
+				estado,
+				metodoPago,
+				valorPedido,
+				paginacion);
 	}
 }

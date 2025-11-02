@@ -1,6 +1,7 @@
 package com.udi.gaaf.vista_reporte_inventario_productos_por_bodega;
 
-import java.util.List;
+
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,8 +27,12 @@ public class VistaInventarioProductosBodegaService {
 	 * @return Lista de objetos {@link VistaInventarioProductosBodega} que contienen
 	 *         información sobre los productos y sus cantidades en cada bodega.
 	 */
-	public List<VistaInventarioProductosBodega> obtenerReporte(Pageable paginacion) {
-		Page<VistaInventarioProductosBodega> vista = repository.findAll(paginacion);
-		return vista.getContent();
+	public Page<VistaInventarioProductosBodega> obtenerReporte(
+			String producto,
+			LocalDateTime fecha,
+			Integer cantidad, 
+			Pageable paginacion
+			) {
+		return repository.findAllWithFilters(producto, fecha, cantidad ,paginacion);
 	}
 }

@@ -1,6 +1,12 @@
 package com.udi.gaaf.vista_pedidos_proveedor;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,4 +17,27 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VistaPedidosProveedorRepository extends JpaRepository<VistaPedidosProveedor, Long> {
 
+	@Query("""
+			SELECT v FROM VistaPedidosProveedor v
+			WHERE	
+				(:fechaPedido IS NULL OR v.fechaPedido = :fechaPedido)
+				AND (:fechaEntrega IS NULL OR v.fechaEntrega = :fechaEntrega)
+		        AND (
+		            :estado IS NULL OR :estado = '' 
+		            OR LOWER(v.estado) LIKE LOWER(CONCAT('%', :estado, '%'))
+		        )
+				AND (
+		            :metodoPago IS NULL OR :metodoPago = '' 
+		            OR LOWER(v.metodoPago) LIKE LOWER(CONCAT('%', :metodoPago, '%'))
+		        )
+		        AND (:valorPedido IS NULL OR v.valorPedido = :valorPedido)
+			""")
+	Page<VistaPedidosProveedor> findAllWithFilters(
+			@Param("fechaPedido") LocalDateTime fechaPedido,
+			@Param("fechaEntrega") LocalDateTime fechaEntrega,
+			@Param("estado") String estado,
+			@Param("metodoPago") String metodoPago,
+			@Param("valorPedido") Double valorPedido,
+			Pageable paginacion
+			);
 }
