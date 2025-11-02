@@ -26,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = "producto")
+@EqualsAndHashCode(of = "id")
 public class VistaInventarioMovimiento {
 	
 	@Id

@@ -9,6 +9,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -28,13 +30,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = "idPedido")
+@EqualsAndHashCode(of = "id")
 public class VistaPedidosProveedor {
 
 	/** Identificador único del pedido. */
 	@Id
-	@Column(name = "id_pedido")
-	private Long idPedido;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	/** Fecha en la que se realizó el pedido. */
 	@Column(name = "fecha_pedido")

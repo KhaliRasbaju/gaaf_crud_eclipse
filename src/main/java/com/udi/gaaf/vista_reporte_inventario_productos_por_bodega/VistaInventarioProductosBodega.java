@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = "bodega")
+@EqualsAndHashCode(of = "id")
 public class VistaInventarioProductosBodega {
 	
 	@Id
