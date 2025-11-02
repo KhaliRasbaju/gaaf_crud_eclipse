@@ -1,7 +1,6 @@
 package com.udi.gaaf.vista_reporte_inventario_productos_por_bodega;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -35,5 +34,5 @@ public class VistaInventarioProductosBodega {
 	private Integer cantidad;
 
 	/** Fecha y hora del último registro o actualización del producto en el inventario. */
-	private LocalDateTime fecha;
+	private LocalDate fecha;
 }

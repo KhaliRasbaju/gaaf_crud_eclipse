@@ -1,7 +1,6 @@
 package com.udi.gaaf.vista_reporte_inventario_movimientos;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,7 +37,7 @@ public interface VistaInventarioMovimientoRepository extends JpaRepository<Vista
 		    @Param("producto") String producto,
 		    @Param("tipo") String tipo,
 		    @Param("cantidad") Integer cantidad,
-		    @Param("fecha") LocalDateTime fecha,
+		    @Param("fecha") LocalDate fecha,
 		    Pageable paginacion
 		);
 

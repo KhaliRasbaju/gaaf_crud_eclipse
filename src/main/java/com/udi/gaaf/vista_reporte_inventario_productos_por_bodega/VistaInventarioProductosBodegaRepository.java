@@ -1,7 +1,6 @@
 package com.udi.gaaf.vista_reporte_inventario_productos_por_bodega;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,7 +31,7 @@ public interface VistaInventarioProductosBodegaRepository extends JpaRepository<
 			""")
 	Page<VistaInventarioProductosBodega> findAllWithFilters(
 			@Param("producto") String producto, 
-			@Param("fecha") LocalDateTime fecha,
+			@Param("fecha") LocalDate fecha,
 			@Param("cantidad") Integer cantidad, 
 			Pageable paginacion);
 

@@ -1,6 +1,6 @@
 package com.udi.gaaf.vista_pedidos_proveedor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.udi.gaaf.common.VistaEstado;
 import com.udi.gaaf.cuenta.TipoCuenta;
@@ -38,11 +38,11 @@ public class VistaPedidosProveedor {
 
 	/** Fecha en la que se realizó el pedido. */
 	@Column(name = "fecha_pedido")
-	private LocalDateTime fechaPedido;
+	private LocalDate fechaPedido;
 
 	/** Fecha programada para la entrega del pedido. */
 	@Column(name = "fecha_entrega")
-	private LocalDateTime fechaEntrega;
+	private LocalDate fechaEntrega;
 
 	/** Estado actual del pedido (por ejemplo, PENDIENTE o RECIBIDO). */
 	@Enumerated(EnumType.STRING)

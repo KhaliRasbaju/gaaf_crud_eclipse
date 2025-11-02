@@ -1,7 +1,6 @@
 package com.udi.gaaf.vista_reporte_compras;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,8 +35,8 @@ public interface VistaCompraRepository extends JpaRepository<VistaCompra, Long> 
 		        AND (:valorPedido IS NULL OR v.valorPedido = :valorPedido)
 			""")
 	Page<VistaCompra> findAllWithFilters(
-			@Param("fechaPedido") LocalDateTime fechaPedido,
-			@Param("fechaEntrega") LocalDateTime fechaEntrega,
+			@Param("fechaPedido") LocalDate fechaPedido,
+			@Param("fechaEntrega") LocalDate fechaEntrega,
 			@Param("estado") String estado,
 			@Param("producto") String producto,
 			@Param("cantidad") Integer cantidad,

@@ -1,6 +1,6 @@
 package com.udi.gaaf.controllers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,8 +53,8 @@ public class ReporteController {
     @GetMapping("/compra")
     public ResponseEntity<Page<VistaCompra>> obtenerReporteCompra(
     		
-    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fechaPedido,
-    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fechaEntrega,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate fechaPedido,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate fechaEntrega,
     		@RequestParam(required = false) String estado,
     		@RequestParam(required = false) String producto,
     		@RequestParam(required = false) Integer cantidad,
@@ -82,8 +82,8 @@ public class ReporteController {
      */
     @RequestMapping("/pedido-proveedor")
     public ResponseEntity<Page<VistaPedidosProveedor>> obtenerReportePedidosProveedor(
-    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fechaPedido,
-    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fechaEntrega,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate fechaPedido,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate fechaEntrega,
     		@RequestParam(required = false) String estado,
     		@RequestParam(required = false) String metodoPago,
     		@RequestParam(required = false) Double valorPedido,
@@ -110,7 +110,7 @@ public class ReporteController {
     		@RequestParam(required = false) String producto,
     		@RequestParam(required = false) String tipo,
     		@RequestParam(required = false) Integer cantidad,
-    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fecha,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate fecha,
     		Pageable paginacion) {
         var detalle = inventarioMovimientoService.obtenerReporte(
         		producto,
@@ -131,7 +131,7 @@ public class ReporteController {
     @GetMapping("/producto-bodega")
     public ResponseEntity<Page<VistaInventarioProductosBodega>> obtenerReporteInventarioProductosBodega(
     		@RequestParam(required = false) String producto,
-    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime fecha,
+    		@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate fecha,
     		@RequestParam(required = false) Integer cantidad,
     		Pageable paginacion
     		) {

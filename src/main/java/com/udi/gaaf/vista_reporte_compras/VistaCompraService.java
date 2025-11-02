@@ -1,7 +1,6 @@
 package com.udi.gaaf.vista_reporte_compras;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,8 +24,8 @@ public class VistaCompraService {
 	 * @return Lista con todos los registros de la vista {@link VistaCompra}.
 	 */
 	public Page<VistaCompra> obtenerReporte(
-			LocalDateTime fechaPedido,
-			LocalDateTime fechaEntrega,
+			LocalDate fechaPedido,
+			LocalDate fechaEntrega,
 			String estado,
 			String producto,
 			Integer cantidad,

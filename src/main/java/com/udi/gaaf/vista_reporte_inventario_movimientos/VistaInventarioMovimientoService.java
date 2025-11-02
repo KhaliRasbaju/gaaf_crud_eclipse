@@ -1,7 +1,6 @@
 package com.udi.gaaf.vista_reporte_inventario_movimientos;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +30,7 @@ public class VistaInventarioMovimientoService {
 			String producto,
 			String tipo,
 			Integer cantidad,
-			LocalDateTime fecha,
+			LocalDate fecha,
 			Pageable paginacion) {
 		
 		return repository.findAllWithFilters(

@@ -1,9 +1,7 @@
 package com.udi.gaaf.vista_reporte_compras;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import com.udi.gaaf.common.VistaEstado;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -36,11 +34,11 @@ public class VistaCompra {
 	
 	/** Fecha en la que se realizó el pedido de compra. */
 	@Column(name = "fecha_pedido")
-	private LocalDateTime fechaPedido;
+	private LocalDate fechaPedido;
 	
 	/** Fecha estimada de entrega del pedido. */
 	@Column(name = "fecha_entrega")
-	private LocalDateTime fechaEntrega;
+	private LocalDate fechaEntrega;
 	
 	/** Estado actual del pedido (por ejemplo, PENDIENTE o RECIBIDO). */
 	@Enumerated(EnumType.STRING)

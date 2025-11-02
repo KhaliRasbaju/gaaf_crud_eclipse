@@ -1,9 +1,7 @@
 package com.udi.gaaf.vista_reporte_inventario_movimientos;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import com.udi.gaaf.transaccion_inventario.TipoTransaccion;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -44,7 +42,7 @@ public class VistaInventarioMovimiento {
 	private Integer cantidad;
 
 	/** Fecha y hora en que se registró el movimiento. */
-	private LocalDateTime fecha;
+	private LocalDate fecha;
 
 	/** Observaciones adicionales o comentarios sobre el movimiento. */
 	private String observacion;

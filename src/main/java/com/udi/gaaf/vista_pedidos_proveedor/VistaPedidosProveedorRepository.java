@@ -1,7 +1,6 @@
 package com.udi.gaaf.vista_pedidos_proveedor;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,8 +32,8 @@ public interface VistaPedidosProveedorRepository extends JpaRepository<VistaPedi
 		        AND (:valorPedido IS NULL OR v.valorPedido = :valorPedido)
 			""")
 	Page<VistaPedidosProveedor> findAllWithFilters(
-			@Param("fechaPedido") LocalDateTime fechaPedido,
-			@Param("fechaEntrega") LocalDateTime fechaEntrega,
+			@Param("fechaPedido") LocalDate fechaPedido,
+			@Param("fechaEntrega") LocalDate fechaEntrega,
 			@Param("estado") String estado,
 			@Param("metodoPago") String metodoPago,
 			@Param("valorPedido") Double valorPedido,
