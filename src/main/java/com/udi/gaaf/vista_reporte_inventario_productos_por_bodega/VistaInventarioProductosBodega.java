@@ -29,8 +29,7 @@ public class VistaInventarioProductosBodega {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	/** Nombre de la bodega en la que se encuentra el producto. */
-	@Id
+	
 	private String bodega;
 
 	/** Nombre o descripción del producto almacenado. */

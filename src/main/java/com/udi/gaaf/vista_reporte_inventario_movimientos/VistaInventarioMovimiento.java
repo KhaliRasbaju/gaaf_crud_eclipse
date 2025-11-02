@@ -34,8 +34,7 @@ public class VistaInventarioMovimiento {
 	private Long id;
 	
 
-	/** Nombre o identificador del producto afectado por la transacción. */
-	@Id
+	
 	private String producto;
 
 	/** Nombre de la bodega donde se realizó el movimiento. */
