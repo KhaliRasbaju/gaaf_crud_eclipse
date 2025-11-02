@@ -32,7 +32,7 @@ public interface VistaCompraRepository extends JpaRepository<VistaCompra, Long> 
 		            OR LOWER(v.producto) LIKE LOWER(CONCAT('%', :producto, '%'))
 		        )
 		        AND (:cantidad IS NULL OR v.cantidad >= :cantidad)
-		        AND (:valorPedido IS NULL OR v.valorPedido = :valorPedido)
+		        AND (:valorPedido IS NULL OR v.valorPedido >= :valorPedido)
 			""")
 	Page<VistaCompra> findAllWithFilters(
 			@Param("fechaPedido") LocalDate fechaPedido,
