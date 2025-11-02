@@ -31,7 +31,7 @@ public interface VistaInventarioProductosBodegaRepository extends JpaRepository<
 				)
 			""")
 	Page<VistaInventarioProductosBodega> findAllWithFilters(
-			@Param("prodcto") String producto, 
+			@Param("producto") String producto, 
 			@Param("fecha") LocalDateTime fecha,
 			@Param("cantidad") Integer cantidad, 
 			Pageable paginacion);
