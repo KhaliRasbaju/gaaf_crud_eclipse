@@ -31,7 +31,7 @@ public interface VistaCompraRepository extends JpaRepository<VistaCompra, Long> 
 		            :producto IS NULL OR :producto = '' 
 		            OR LOWER(v.producto) LIKE LOWER(CONCAT('%', :producto, '%'))
 		        )
-		        AND (:cantidad IS NULL OR v.cantidad = :cantidad)
+		        AND (:cantidad IS NULL OR v.cantidad >= :cantidad)
 		        AND (:valorPedido IS NULL OR v.valorPedido = :valorPedido)
 			""")
 	Page<VistaCompra> findAllWithFilters(

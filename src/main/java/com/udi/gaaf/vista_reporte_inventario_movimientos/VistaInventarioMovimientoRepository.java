@@ -31,7 +31,7 @@ public interface VistaInventarioMovimientoRepository extends JpaRepository<Vista
 		            :tipo IS NULL OR :tipo = '' 
 		            OR LOWER(v.tipo) LIKE LOWER(CONCAT('%', :tipo, '%'))
 		        )
-		        AND (:cantidad IS NULL OR v.cantidad = :cantidad)
+		        AND (:cantidad IS NULL OR v.cantidad >= :cantidad)
 		""")
 		Page<VistaInventarioMovimiento> findAllWithFilters(
 		    @Param("producto") String producto,

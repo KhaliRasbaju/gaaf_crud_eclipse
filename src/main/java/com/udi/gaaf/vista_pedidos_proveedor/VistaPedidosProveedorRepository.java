@@ -29,7 +29,7 @@ public interface VistaPedidosProveedorRepository extends JpaRepository<VistaPedi
 		            :metodoPago IS NULL OR :metodoPago = '' 
 		            OR LOWER(v.metodoPago) LIKE LOWER(CONCAT('%', :metodoPago, '%'))
 		        )
-		        AND (:valorPedido IS NULL OR v.valorPedido = :valorPedido)
+		        AND (:valorPedido IS NULL OR v.valorPedido >= :valorPedido)
 			""")
 	Page<VistaPedidosProveedor> findAllWithFilters(
 			@Param("fechaPedido") LocalDate fechaPedido,

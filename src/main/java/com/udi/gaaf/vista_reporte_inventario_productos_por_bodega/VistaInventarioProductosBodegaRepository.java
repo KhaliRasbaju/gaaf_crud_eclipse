@@ -26,7 +26,7 @@ public interface VistaInventarioProductosBodegaRepository extends JpaRepository<
 					OR LOWER(v.producto) LIKE LOWER(CONCAT('%', :producto, '%'))
 				)
 				AND (
-					:cantidad IS NULL OR v.cantidad = :cantidad
+					:cantidad IS NULL OR v.cantidad >= :cantidad
 				)
 			""")
 	Page<VistaInventarioProductosBodega> findAllWithFilters(
