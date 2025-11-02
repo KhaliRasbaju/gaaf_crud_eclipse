@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio que gestiona la lógica de negocio relacionada con el reporte
@@ -26,6 +27,8 @@ public class VistaInventarioMovimientoService {
 	 * @return Lista de objetos {@link VistaInventarioMovimiento} que representan los
 	 *         movimientos del inventario.
 	 */
+	
+	@Transactional(readOnly = true)
 	public Page<VistaInventarioMovimiento> obtenerReporte(
 			String producto,
 			String tipo,

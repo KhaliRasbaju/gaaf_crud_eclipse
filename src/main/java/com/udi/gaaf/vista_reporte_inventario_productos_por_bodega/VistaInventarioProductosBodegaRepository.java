@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * de inventario de productos por bodega.</p>
  */
 @Repository
-public interface VistaInventarioProductosBodegaRepository extends JpaRepository<VistaInventarioProductosBodega, String> {
+public interface VistaInventarioProductosBodegaRepository extends JpaRepository<VistaInventarioProductosBodega, Long> {
 
 	@Query("""
 			SELECT v FROM VistaInventarioProductosBodega v

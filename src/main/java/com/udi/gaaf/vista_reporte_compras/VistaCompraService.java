@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio que gestiona la lógica de negocio relacionada con la vista de reportes de compras.
@@ -23,6 +24,7 @@ public class VistaCompraService {
 	 * 
 	 * @return Lista con todos los registros de la vista {@link VistaCompra}.
 	 */
+	@Transactional(readOnly = true)
 	public Page<VistaCompra> obtenerReporte(
 			LocalDate fechaPedido,
 			LocalDate fechaEntrega,

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * de movimientos de inventario registrados en el sistema.</p>
  */
 @Repository
-public interface VistaInventarioMovimientoRepository extends JpaRepository<VistaInventarioMovimiento, String> {
+public interface VistaInventarioMovimientoRepository extends JpaRepository<VistaInventarioMovimiento, Long> {
 
 	
 	

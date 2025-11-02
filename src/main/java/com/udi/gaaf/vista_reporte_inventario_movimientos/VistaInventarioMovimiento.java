@@ -5,6 +5,8 @@ import com.udi.gaaf.transaccion_inventario.TipoTransaccion;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -26,6 +28,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "producto")
 public class VistaInventarioMovimiento {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
 
 	/** Nombre o identificador del producto afectado por la transacción. */
 	@Id

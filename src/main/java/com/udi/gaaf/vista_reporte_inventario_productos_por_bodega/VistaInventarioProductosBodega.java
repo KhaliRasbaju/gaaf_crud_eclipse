@@ -2,6 +2,8 @@ package com.udi.gaaf.vista_reporte_inventario_productos_por_bodega;
 
 import java.time.LocalDate;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -22,7 +24,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "bodega")
 public class VistaInventarioProductosBodega {
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
 	/** Nombre de la bodega en la que se encuentra el producto. */
 	@Id
 	private String bodega;
