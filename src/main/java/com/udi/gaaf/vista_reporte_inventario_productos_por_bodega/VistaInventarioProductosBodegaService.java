@@ -32,6 +32,7 @@ public class VistaInventarioProductosBodegaService {
 			Integer cantidad, 
 			Pageable paginacion
 			) {
-		return repository.findAllWithFilters(producto, fecha, cantidad ,paginacion);
+		return repository.findAll(paginacion);
+		// return repository.findAllWithFilters(producto, fecha, cantidad, paginacion);
 	}
 }
