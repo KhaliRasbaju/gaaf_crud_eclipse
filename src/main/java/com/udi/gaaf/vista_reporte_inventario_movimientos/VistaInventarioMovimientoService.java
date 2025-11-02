@@ -3,6 +3,8 @@ package com.udi.gaaf.vista_reporte_inventario_movimientos;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,7 +27,8 @@ public class VistaInventarioMovimientoService {
 	 * @return Lista de objetos {@link VistaInventarioMovimiento} que representan los
 	 *         movimientos del inventario.
 	 */
-	public List<VistaInventarioMovimiento> obtenerReporte() {
-		return repository.findAll();
+	public List<VistaInventarioMovimiento> obtenerReporte(Pageable paginacion) {
+		Page<VistaInventarioMovimiento> vista = repository.findAll(paginacion);
+		return vista.getContent();
 	}
 }

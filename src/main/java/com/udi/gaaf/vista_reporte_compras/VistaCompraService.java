@@ -24,7 +24,8 @@ public class VistaCompraService {
 	 * 
 	 * @return Lista con todos los registros de la vista {@link VistaCompra}.
 	 */
-	public Page<VistaCompra> obtenerReporte(Pageable paginacion) {
-		return repository.findAll(paginacion);
+	public List<VistaCompra> obtenerReporte(Pageable paginacion) {
+		Page<VistaCompra> vista = repository.findAll(paginacion);
+		return vista.getContent();
 	}
 }

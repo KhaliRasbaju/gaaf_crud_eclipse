@@ -3,7 +3,6 @@ package com.udi.gaaf.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,7 +49,7 @@ public class ReporteController {
      * <p>Retorna un código HTTP { @code 200 (OK) } si la operación es exitosa.</p>
      */
     @GetMapping("/compra")
-    public ResponseEntity<Page<VistaCompra>> obtenerReporteCompra(Pageable paginacion) {
+    public ResponseEntity<List<VistaCompra>> obtenerReporteCompra(Pageable paginacion) {
         var detalle = compraService.obtenerReporte(paginacion);
         System.out.println(detalle);
         return ResponseEntity.ok(detalle);
@@ -64,8 +63,8 @@ public class ReporteController {
      * <p>Retorna un código HTTP { @code 200 (OK) } si la operación es exitosa.</p>
      */
     @RequestMapping("/pedido-proveedor")
-    public ResponseEntity<List<VistaPedidosProveedor>> obtenerReportePedidosProveedor() {
-        var detalle = pedidosProveedorService.obtenerReporte();
+    public ResponseEntity<List<VistaPedidosProveedor>> obtenerReportePedidosProveedor(Pageable paginacion) {
+        var detalle = pedidosProveedorService.obtenerReporte(paginacion);
         return ResponseEntity.ok(detalle);
     }
 
@@ -77,8 +76,8 @@ public class ReporteController {
      * <p>Retorna un código HTTP { @code 200 (OK) } si la operación es exitosa.</p>
      */
     @GetMapping("/inventario-movimiento")
-    public ResponseEntity<List<VistaInventarioMovimiento>> obtenerReporteInventarioMovimiento() {
-        var detalle = inventarioMovimientoService.obtenerReporte();
+    public ResponseEntity<List<VistaInventarioMovimiento>> obtenerReporteInventarioMovimiento(Pageable paginacion) {
+        var detalle = inventarioMovimientoService.obtenerReporte(paginacion);
         return ResponseEntity.ok(detalle);
     }
 
@@ -90,8 +89,8 @@ public class ReporteController {
      * <p>Retorna un código HTTP { @code 200 (OK) } si la operación es exitosa.</p>
      */
     @GetMapping("/producto-bodega")
-    public ResponseEntity<List<VistaInventarioProductosBodega>> obtenerReporteInventarioProductosBodega() {
-        var detalle = inventarioProductosBodegaService.obtenerReporte();
+    public ResponseEntity<List<VistaInventarioProductosBodega>> obtenerReporteInventarioProductosBodega(Pageable paginacion) {
+        var detalle = inventarioProductosBodegaService.obtenerReporte(paginacion);
         return ResponseEntity.ok(detalle);
     }
 }

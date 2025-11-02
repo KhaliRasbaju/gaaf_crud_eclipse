@@ -3,6 +3,8 @@ package com.udi.gaaf.vista_pedidos_proveedor;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,7 +24,10 @@ public class VistaPedidosProveedorService {
 	 * 
 	 * @return Lista con todos los registros de la vista {@link VistaPedidosProveedor}.
 	 */
-	public List<VistaPedidosProveedor> obtenerReporte() {
-		return repository.findAll();
+	public List<VistaPedidosProveedor> obtenerReporte(Pageable paginacion) {
+		
+		Page<VistaPedidosProveedor> vista = repository.findAll(paginacion);
+		
+		return vista.getContent();
 	}
 }
