@@ -36,7 +36,7 @@ public class MedioPago {
     private Long id;
 
     /** Referencia única del pago */
-    @Column(name = "referencia_pago")
+    @Column(name = "referencia_pago", nullable = true)
     private String referencia;
 
     /** Método de pago asociado (muchos medios pueden pertenecer a un método) */
