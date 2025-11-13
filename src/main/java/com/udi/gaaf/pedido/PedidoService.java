@@ -204,10 +204,12 @@ public class PedidoService {
         	pedido.setDetallePedidos(null);
         	pedido.setPago(null);
         	repository.delete(pedido);
+        	System.out.println(pedido);
+        	return new DatosDetalleResponse(200, "Pedido eliminado correctamente");
 		} catch (Exception e) {
-			throw new BadRequestException("Error al eliminar");
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al eliminar el pedido");
 		}
         
-        return new DatosDetalleResponse(200, "Pedido eliminado correctamente");
     }
 }
