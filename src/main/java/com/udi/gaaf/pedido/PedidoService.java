@@ -188,6 +188,7 @@ public class PedidoService {
      * @return Respuesta con el estado de la operación.
      * @throws BadRequestException Si el pedido ya fue recibido o tiene transacciones.
      */
+    @Transactional
     public DatosDetalleResponse eliminarPorId(Long id) {
         var pedido = obtenerPedidoPorId(id);
         validarRecibirPedido(pedido);
@@ -197,22 +198,21 @@ public class PedidoService {
         }
 
         try {
-            // Eliminar los detalles del pedido
-            pedido.getDetallePedidos().forEach(d -> {
-                detallePedidoService.eliminarPorPedidoId(pedido.getId());
-            });
-
-            // Guardamos el ID del medio de pago antes de eliminar el pedido
+            // Guardar el ID del medio de pago antes de eliminar el pedido
             Long medioPagoId = pedido.getPago() != null ? pedido.getPago().getId() : null;
 
-            // Romper referencias para evitar problemas con JPA (relaciones bidireccionales)
-            pedido.setDetallePedidos(null);
+            // Eliminar los detalles del pedido correctamente
+            if (pedido.getDetallePedidos() != null && !pedido.getDetallePedidos().isEmpty()) {
+                pedido.getDetallePedidos().clear(); 
+            }
+
+            // Quitar la relación con el medio de pago
             pedido.setPago(null);
 
             // Eliminar el pedido
             repository.delete(pedido);
 
-            // Ahora eliminar el medio de pago (si existe)
+            // Luego eliminar el medio de pago
             if (medioPagoId != null) {
                 medioPagoService.eliminarPorId(medioPagoId);
             }
@@ -223,4 +223,6 @@ public class PedidoService {
             return new DatosDetalleResponse(400, "Error al eliminar el pedido y su medio de pago");
         }
     }
+
+   
 }
