@@ -207,10 +207,12 @@ public class PedidoService {
 
             // 3. Desvincular el pago
             pedido.setPago(null);
-            repository.save(pedido); // << necesario para evitar TransientObjectException
+            var pedidoEliminar = repository.save(pedido); 
+            
+            
 
             // 4. Eliminar el pedido
-            repository.delete(pedido);
+            repository.delete(pedidoEliminar);
 
             // 5. Eliminar el medio de pago
             medioPagoService.eliminarPorId(medioPagoId);
@@ -218,8 +220,8 @@ public class PedidoService {
             return new DatosDetalleResponse(200, "Pedido eliminado correctamente");
 
         } catch (Exception e) {
-            e.printStackTrace();
-            return new DatosDetalleResponse(400, "Error al eliminar el pedido");
+        	System.out.println("Error tipo:" + e);
+            throw new BadRequestException("Error al eliminar el pedido");
         }
     }
 
