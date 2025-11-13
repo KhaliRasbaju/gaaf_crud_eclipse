@@ -115,7 +115,7 @@ public class PedidoService {
             validarRecibirPedido(pedido);
 
             var proveedor = proveedorService.obtenerProveedorPorNit(datos.nitProveedor());
-            medioPagoService.editar(datos.medioPago(), id);
+            medioPagoService.editar(datos.medioPago(), pedido.getPago().getId());
 
             if (!pedido.getValor().equals(datos.valor())) pedido.setValor(datos.valor());
             if (!pedido.getProveedor().getNit().equals(datos.nitProveedor())) pedido.setProveedor(proveedor);
