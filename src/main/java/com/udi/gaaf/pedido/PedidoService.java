@@ -195,21 +195,32 @@ public class PedidoService {
         if (!pedido.getTransaccionInventarios().isEmpty()) {
             throw new BadRequestException("No se puede eliminar: existen transacciones asociadas");
         }
-        
+
         try {
-        	pedido.getDetallePedidos().forEach(d -> {
-        		detallePedidoService.eliminarPorPedidoId(pedido.getId());
-        	});
-        	medioPagoService.eliminarPorId(pedido.getPago().getId());
-        	pedido.setDetallePedidos(null);
-        	pedido.setPago(null);
-        	repository.delete(pedido);
-        	System.out.println(pedido);
-        	return new DatosDetalleResponse(200, "Pedido eliminado correctamente");
-		} catch (Exception e) {
-			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al eliminar el pedido");
-		}
-        
+            // Eliminar los detalles del pedido
+            pedido.getDetallePedidos().forEach(d -> {
+                detallePedidoService.eliminarPorPedidoId(pedido.getId());
+            });
+
+            // Guardamos el ID del medio de pago antes de eliminar el pedido
+            Long medioPagoId = pedido.getPago() != null ? pedido.getPago().getId() : null;
+
+            // Romper referencias para evitar problemas con JPA (relaciones bidireccionales)
+            pedido.setDetallePedidos(null);
+            pedido.setPago(null);
+
+            // Eliminar el pedido
+            repository.delete(pedido);
+
+            // Ahora eliminar el medio de pago (si existe)
+            if (medioPagoId != null) {
+                medioPagoService.eliminarPorId(medioPagoId);
+            }
+
+            return new DatosDetalleResponse(200, "Pedido y medio de pago eliminados correctamente");
+        } catch (Exception e) {
+            System.out.println("Error al eliminar el pedido: " + e.getMessage());
+            return new DatosDetalleResponse(400, "Error al eliminar el pedido y su medio de pago");
+        }
     }
 }
