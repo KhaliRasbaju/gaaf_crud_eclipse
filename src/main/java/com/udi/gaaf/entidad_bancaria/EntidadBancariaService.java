@@ -53,10 +53,17 @@ public class EntidadBancariaService {
      * @return un objeto {@link DatosDetalleCommon} con los datos del registro creado.
      */
     @Transactional
-    public DatosDetalleCommon crear(DatosRegistrarCommon datos) {
-        var entidad = new EntidadBancaria(datos);
-        var nuevaEntidad = repository.save(entidad);
-        return detalleEntidad(nuevaEntidad);
+    public DatosDetalleResponse crear(DatosRegistrarCommon datos) {
+        try {
+        	var entidad = new EntidadBancaria(datos);
+        	repository.save(entidad);
+        	return new DatosDetalleResponse(201, "Entidad bancaria creada correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al crear la entidad bancaria");
+		}
+    	
+    	
     }
 
     /**
@@ -69,10 +76,17 @@ public class EntidadBancariaService {
      */
     @Transactional
     public DatosDetalleResponse editar(Long id, DatosRegistrarCommon datos) {
-        var entidad = obtenerEntidadBancariaPorId(id);
-        if (datos.nombre() != null) entidad.setNombre(datos.nombre());
-        repository.save(entidad);
-        return new DatosDetalleResponse(200, "Entidad bancaria actualizada correctamente");
+    	
+    	try {
+			
+    		var entidad = obtenerEntidadBancariaPorId(id);
+    		if (datos.nombre() != null) entidad.setNombre(datos.nombre());
+    		repository.save(entidad);
+    		return new DatosDetalleResponse(200, "Entidad bancaria actualizada correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al actualizar la entidad bancaria");
+		}
     }
 
     /**

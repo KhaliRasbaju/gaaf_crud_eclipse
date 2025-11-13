@@ -89,16 +89,19 @@ public class ProveedorService {
      * @throws BadRequestException Si ya existe un proveedor con el mismo NIT.
      */
     @Transactional
-    public DatosDetalleProveedor crear(DatosRegistrarProveedor datos) {
-        existsProveedorByNit(datos.nit());
-        var proveedor = new Proveedor(datos);
-        var nuevoProveedor = repository.save(proveedor);
-
-        cuentaService.crear(datos.cuenta(), nuevoProveedor);
-        ubicacionService.crear(datos.ubicacion(), nuevoProveedor);
-
-        var proveedorFinal = obtenerProveedorPorNit(nuevoProveedor.getNit());
-        return detalleProveedor(proveedorFinal, true);
+    public DatosDetalleResponse crear(DatosRegistrarProveedor datos) {
+    	
+    	try {
+    		existsProveedorByNit(datos.nit());
+    		var proveedor = new Proveedor(datos);
+    		var nuevoProveedor = repository.save(proveedor);    		
+    		cuentaService.crear(datos.cuenta(), nuevoProveedor);
+    		ubicacionService.crear(datos.ubicacion(), nuevoProveedor);    	
+    		return new DatosDetalleResponse(201, "Proveedor creado correctamente");			
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al crear el proveedor");
+		}
     }
 
     /**
@@ -111,17 +114,20 @@ public class ProveedorService {
      */
     @Transactional
     public DatosDetalleResponse editar(DatosRegistrarProveedor datos, Long nit) {
-        var proveedor = obtenerProveedorPorNit(nit);
-
-        if (!datos.nombre().equals(proveedor.getNombre())) proveedor.setNombre(datos.nombre());
-        if (!datos.correo().equals(proveedor.getCorreo())) proveedor.setCorreo(datos.correo());
-        if (!datos.telefono().equals(proveedor.getTelefono())) proveedor.setTelefono(datos.telefono());
-
-        repository.save(proveedor);
-        cuentaService.editar(datos.cuenta(), nit);
-        ubicacionService.editar(datos.ubicacion(), proveedor);
-
-        return new DatosDetalleResponse(200, "Proveedor actualizado correctamente");
+    	
+    	try {			
+    		var proveedor = obtenerProveedorPorNit(nit);
+    		if (!datos.nombre().equals(proveedor.getNombre())) proveedor.setNombre(datos.nombre());
+    		if (!datos.correo().equals(proveedor.getCorreo())) proveedor.setCorreo(datos.correo());
+    		if (!datos.telefono().equals(proveedor.getTelefono())) proveedor.setTelefono(datos.telefono());
+    		repository.save(proveedor);
+    		cuentaService.editar(datos.cuenta(), nit);
+    		ubicacionService.editar(datos.ubicacion(), proveedor);
+    		return new DatosDetalleResponse(200, "Proveedor actualizado correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al actualizar el proveedor");
+		}
     }
 
     /**

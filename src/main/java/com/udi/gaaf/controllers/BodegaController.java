@@ -39,7 +39,7 @@ public class BodegaController {
 	 * @throws NotRequestBodyException si el cuerpo de la solicitud es nulo.
 	 */
 	@PostMapping("/crear")
-	public ResponseEntity<DatosDetalleBodega> crear(@RequestBody(required = false) @Valid DatosRegistrarBodega datos) {
+	public ResponseEntity<DatosDetalleResponse> crear(@RequestBody(required = false) @Valid DatosRegistrarBodega datos) {
 		
 		if(datos == null) {
 			throw new NotRequestBodyException("Se requiere body");

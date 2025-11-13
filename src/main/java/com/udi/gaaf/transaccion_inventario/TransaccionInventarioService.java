@@ -67,28 +67,33 @@ public class TransaccionInventarioService {
      */
     @Transactional
     public DatosDetalleResponse crear(DatosRegistrarTransaccion datos) {
-        DatosRegistrarInventario datosInventario = new DatosRegistrarInventario(
-                LocalDateTime.now(),
-                datos.cantidad(),
-                datos.idProducto(),
-                datos.idBodega()
-        );
-
-        if (datos.tipo().equals(TipoTransaccion.ENTRADA)) {
-            inventarioService.crear(datosInventario, false);
-        } else {
-            inventarioService.crear(datosInventario, true);
-        }
-
-        DatosBuscarInventarioIds buscar = new DatosBuscarInventarioIds(datos.idBodega(), datos.idProducto());
-        var inventario = inventarioService.obtenerPorInventarioIds(buscar);
-        var pedido = (datos.idPedido() != null)
-                ? pedidoService.obtenerPedidoPorId(datos.idPedido())
-                : null;
-
-        var transaccion = new TransaccionInventario(datos, inventario, pedido);
-        repository.save(transaccion);
-
-        return new DatosDetalleResponse(200, "Transacción creada correctamente");
+    	try {		
+    		DatosRegistrarInventario datosInventario = new DatosRegistrarInventario(
+    				LocalDateTime.now(),
+    				datos.cantidad(),
+    				datos.idProducto(),
+    				datos.idBodega()
+    				);
+    		
+    		if (datos.tipo().equals(TipoTransaccion.ENTRADA)) {
+    			inventarioService.crear(datosInventario, false);
+    		} else {
+    			inventarioService.crear(datosInventario, true);
+    		}
+    		
+    		DatosBuscarInventarioIds buscar = new DatosBuscarInventarioIds(datos.idBodega(), datos.idProducto());
+    		var inventario = inventarioService.obtenerPorInventarioIds(buscar);
+    		var pedido = (datos.idPedido() != null)
+    				? pedidoService.obtenerPedidoPorId(datos.idPedido())
+    						: null;
+    		
+    		var transaccion = new TransaccionInventario(datos, inventario, pedido);
+    		repository.save(transaccion);
+    		return new DatosDetalleResponse(200, "Transacción creada correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al crear la transacción");
+		}
+    	
     }
 }

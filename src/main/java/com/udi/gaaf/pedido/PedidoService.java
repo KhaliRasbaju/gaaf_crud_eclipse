@@ -84,15 +84,19 @@ public class PedidoService {
      * @return DTO con los detalles del pedido creado.
      */
     @Transactional
-    public DatosDetallePedido crear(DatosRegistrarPedido datos) {
-        var proveedor = proveedorService.obtenerProveedorPorNit(datos.nitProveedor());
-        var creaMedio = medioPagoService.crear(datos.medioPago());
-        var medio = medioPagoService.obtenerMedioPagoPorId(creaMedio.id());
-        var pedido = new Pedido(datos, proveedor, medio);
-        var nuevoPedido = repository.save(pedido);
-        datos.detalle().forEach(d -> detallePedidoService.crear(d, nuevoPedido));
-        var pedidoFinal = obtenerPedidoPorId(nuevoPedido.getId());
-        return detallePedido(pedidoFinal);
+    public DatosDetalleResponse crear(DatosRegistrarPedido datos) {
+    	try {
+    		var proveedor = proveedorService.obtenerProveedorPorNit(datos.nitProveedor());
+    		var creaMedio = medioPagoService.crear(datos.medioPago());
+    		var medio = medioPagoService.obtenerMedioPagoPorId(creaMedio.id());
+    		var pedido = new Pedido(datos, proveedor, medio);
+    		var nuevoPedido = repository.save(pedido);
+    		datos.detalle().forEach(d -> detallePedidoService.crear(d, nuevoPedido));
+    		return new DatosDetalleResponse(201, "Pedido creado correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Eror al crear el pedido");
+		}
     }
 
     /**
@@ -105,31 +109,39 @@ public class PedidoService {
      */
     @Transactional
     public DatosDetalleResponse editar(DatosRegistrarPedido datos, Long id) {
-        var pedido = obtenerPedidoPorId(id);
-        validarRecibirPedido(pedido);
+    	
+    	try {
+    		var pedido = obtenerPedidoPorId(id);
+            validarRecibirPedido(pedido);
 
-        var proveedor = proveedorService.obtenerProveedorPorNit(datos.nitProveedor());
-        medioPagoService.editar(datos.medioPago(), id);
+            var proveedor = proveedorService.obtenerProveedorPorNit(datos.nitProveedor());
+            medioPagoService.editar(datos.medioPago(), id);
 
-        if (!pedido.getValor().equals(datos.valor())) pedido.setValor(datos.valor());
-        if (!pedido.getProveedor().getNit().equals(datos.nitProveedor())) pedido.setProveedor(proveedor);
-        if (!pedido.getFechaPedido().equals(datos.fechaPedido())) pedido.setFechaPedido(datos.fechaPedido());
+            if (!pedido.getValor().equals(datos.valor())) pedido.setValor(datos.valor());
+            if (!pedido.getProveedor().getNit().equals(datos.nitProveedor())) pedido.setProveedor(proveedor);
+            if (!pedido.getFechaPedido().equals(datos.fechaPedido())) pedido.setFechaPedido(datos.fechaPedido());
 
-        for (var detalleNuevo : datos.detalle()) {
-            var detalleExistente = pedido.getDetallePedidos().stream()
-                .filter(d -> d.getProducto().getId().equals(detalleNuevo.idProducto()))
-                .findFirst()
-                .orElse(null);
+            for (var detalleNuevo : datos.detalle()) {
+                var detalleExistente = pedido.getDetallePedidos().stream()
+                    .filter(d -> d.getProducto().getId().equals(detalleNuevo.idProducto()))
+                    .findFirst()
+                    .orElse(null);
 
-            if (detalleExistente != null) {
-                detallePedidoService.editar(detalleNuevo, pedido);
-            } else {
-                detallePedidoService.crear(detalleNuevo, pedido);
+                if (detalleExistente != null) {
+                    detallePedidoService.editar(detalleNuevo, pedido);
+                } else {
+                    detallePedidoService.crear(detalleNuevo, pedido);
+                }
             }
-        }
 
-        repository.save(pedido);
-        return new DatosDetalleResponse(200, "Pedido actualizado correctamente");
+            repository.save(pedido);
+            return new DatosDetalleResponse(200, "Pedido actualizado correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al actualizar el pedido");
+		}
+    	
+        
     }
 
     /**

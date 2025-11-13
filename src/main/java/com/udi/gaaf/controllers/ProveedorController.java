@@ -45,7 +45,7 @@ public class ProveedorController {
      * @throws NotRequestBodyException si el cuerpo de la solicitud es nulo.
      */
     @PostMapping("/crear")
-    public ResponseEntity<DatosDetalleProveedor> crear(@RequestBody(required = false) @Valid DatosRegistrarProveedor datos) {
+    public ResponseEntity<DatosDetalleResponse> crear(@RequestBody(required = false) @Valid DatosRegistrarProveedor datos) {
         if (datos == null) {
             throw new NotRequestBodyException("Se requiere el body");
         }

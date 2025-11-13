@@ -53,10 +53,15 @@ public class ProductoService {
      * @return DTO con los detalles del producto creado.
      */
     @Transactional
-    public DatosDetalleProducto crear(DatosRegistrarProducto datos) {
-        var producto = new Producto(datos);
-        var nuevoProducto = repository.save(producto);
-        return detalleProducto(nuevoProducto);
+    public DatosDetalleResponse crear(DatosRegistrarProducto datos) {
+    	try {
+    		var producto = new Producto(datos);
+    		repository.save(producto);
+    		return new DatosDetalleResponse(201, "Producto creado correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al crear el producto");
+		}
     }
 
     /**
@@ -68,15 +73,18 @@ public class ProductoService {
      * @throws NotFoundException Si el producto no existe.
      */
     @Transactional
-    public DatosDetalleResponse editar(DatosRegistrarProducto datos, Long id) {
-        var producto = obtenerProductoPorId(id);
-
-        if (!datos.nombre().equals(producto.getNombre())) producto.setNombre(datos.nombre());
-        if (!datos.descripcion().equals(producto.getDescripcion())) producto.setDescripcion(datos.descripcion());
-        if (datos.tipo() != producto.getTipo()) producto.setTipo(datos.tipo());
-
-        repository.save(producto);
-        return new DatosDetalleResponse(200, "Producto actualizado correctamente");
+    public DatosDetalleResponse editar(DatosRegistrarProducto datos, Long id) {  
+    	try {			
+    		var producto = obtenerProductoPorId(id);    		
+    		if (!datos.nombre().equals(producto.getNombre())) producto.setNombre(datos.nombre());
+    		if (!datos.descripcion().equals(producto.getDescripcion())) producto.setDescripcion(datos.descripcion());
+    		if (datos.tipo() != producto.getTipo()) producto.setTipo(datos.tipo());
+    		repository.save(producto);
+    		return new DatosDetalleResponse(200, "Producto actualizado correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al actualizar el producto");
+		}	
     }
 
     /**

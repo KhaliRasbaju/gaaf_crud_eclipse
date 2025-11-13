@@ -64,11 +64,17 @@ public class MetodoPagoService {
      * @return Objeto {@link DatosDetalleCommon} con la información del nuevo método.
      * @throws BadRequestException Si el nombre ya está registrado.
      */
-    public DatosDetalleCommon crear(DatosRegistrarCommon datos) {
-        existeMetodoPago(datos.nombre());
-        var metodo = new MetodoPago(datos);
-        var nuevoMetodo = repository.save(metodo);
-        return detalleMetodoPago(nuevoMetodo);
+    public DatosDetalleResponse crear(DatosRegistrarCommon datos) {
+    	try {
+    		existeMetodoPago(datos.nombre());
+    		var metodo = new MetodoPago(datos);
+    		repository.save(metodo);
+			return new DatosDetalleResponse(201, "Metodo de pago creado correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al crear el metodo de pago");
+		}
+    	
     }
 
     /**
@@ -80,12 +86,17 @@ public class MetodoPagoService {
      * @throws NotFoundException  Si no se encuentra el método.
      */
     public DatosDetalleResponse editar(DatosRegistrarCommon datos, Long id) {
-        var metodo = obtenerMetodoPagoPorId(id);
-        if (!metodo.getNombre().equals(datos.nombre())) {
-            metodo.setNombre(datos.nombre());
-        }
-        repository.save(metodo);
-        return new DatosDetalleResponse(200, "Método de pago actualizado correctamente");
+    	try {
+    		var metodo = obtenerMetodoPagoPorId(id);
+    		if (!metodo.getNombre().equals(datos.nombre())) {
+    			metodo.setNombre(datos.nombre());
+    		}
+    		repository.save(metodo);
+    		return new DatosDetalleResponse(200, "Método de pago actualizado correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Erro al actualizar el metodo de pago");
+		}
     }
 
     /**

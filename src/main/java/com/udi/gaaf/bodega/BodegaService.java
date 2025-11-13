@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.udi.gaaf.common.DatosDetalleResponse;
 
 /**
@@ -68,10 +67,16 @@ public class BodegaService {
      * @return representación detallada de la bodega creada
      */
     @Transactional
-    public DatosDetalleBodega crear(DatosRegistrarBodega datos) {
-        var bodega = new Bodega(datos);
-        var bodegaNueva = repository.save(bodega);
-        return detalleBodega(bodegaNueva);
+    public DatosDetalleResponse crear(DatosRegistrarBodega datos) {
+    	try {
+			
+    		var bodega = new Bodega(datos);
+    		repository.save(bodega);
+    		return new DatosDetalleResponse(201, "Bodega creada correctamente"); 
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(500, "Error al crear la bodega"); 
+		}
     }
 
     /**
@@ -83,13 +88,16 @@ public class BodegaService {
      */
     @Transactional
     public DatosDetalleResponse editar(DatosRegistrarBodega datos, Long id) {
-        var bodega = obtenerBodegaPorId(id);
-
-        if (datos.nombre() != null) bodega.setNombre(datos.nombre());
-        if (datos.ubicacion() != null) bodega.setUbicacion(datos.ubicacion());
-
-        repository.save(bodega);
-        return new DatosDetalleResponse(200, "Bodega actualizada correctamente");
+    	try {
+    		var bodega = obtenerBodegaPorId(id);
+    		if (datos.nombre() != null) bodega.setNombre(datos.nombre());
+    		if (datos.ubicacion() != null) bodega.setUbicacion(datos.ubicacion());
+    		repository.save(bodega);
+    		return new DatosDetalleResponse(200, "Bodega actualizada correctamente");
+		} catch (Exception e) {
+			System.out.println(e);
+			return new DatosDetalleResponse(400, "Error al actualizar la bodega.");
+		}
     }
 
     /**

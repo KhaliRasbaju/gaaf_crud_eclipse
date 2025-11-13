@@ -45,7 +45,7 @@ public class MetodoPagoController {
 	 * @throws NotRequestBodyException si el cuerpo de la solicitud es nulo.
 	 */
 	@PostMapping("/crear")
-	public ResponseEntity<DatosDetalleCommon> crear(@RequestBody(required = false) @Valid DatosRegistrarCommon datos) {
+	public ResponseEntity<DatosDetalleResponse> crear(@RequestBody(required = false) @Valid DatosRegistrarCommon datos) {
 		if (datos == null) {
 			throw new NotRequestBodyException("Se requiere body");
 		}
