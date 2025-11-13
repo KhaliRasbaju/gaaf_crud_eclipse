@@ -1,5 +1,7 @@
 package com.udi.gaaf.medio_pago;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,30 +86,33 @@ public class MedioPagoService {
      */
     @Transactional
     public MedioPago editar(DatosRegistrarMedioPago datos, Long id) {
-    	try {
-			System.out.println(datos.idMetodoPago() + ", " + datos.referencia());
-			
-    		var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
-    		var medio = repository.findById(id)
-    				.orElseThrow(() -> new NotFoundException("Medio de pago no encontrado por el producto id: " + id));
-    		System.out.println("REF BD = " + medio.getReferencia());
-    		System.out.println("REF NUEVA = " + datos.referencia());
-    		System.out.println("SON IGUALES? " + medio.getReferencia().equals(datos.referencia()));
-    		if (!medio.getReferencia().equals(datos.referencia())) {
-    			if(datos.referencia().equals("null")) {
-    				medio.setReferencia(null);
-    			} else {
-    				medio.setReferencia(datos.referencia());
-    			}
-    		}
-    		if (!medio.getMetodo().getId().equals(datos.idMetodoPago())) medio.setMetodo(metodo);
-    		
-    		return repository.save(medio);
-		} catch (Exception e) {
-			System.out.println(e);
-			throw new BadRequestException("Error en la actualizacion del metodo de pago");
-		}
+        try {
+            var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
+            var medio = repository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Medio de pago no encontrado por id: " + id));
+
+            // Comparación segura
+            if (!Objects.equals(medio.getReferencia(), datos.referencia())) {
+
+                if ("null".equals(datos.referencia())) {
+                    medio.setReferencia(null);
+                } else {
+                    medio.setReferencia(datos.referencia());
+                }
+            }
+
+            if (!Objects.equals(medio.getMetodo().getId(), datos.idMetodoPago())) {
+                medio.setMetodo(metodo);
+            }
+
+            return repository.save(medio);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BadRequestException("Error en la actualizacion del metodo de pago");
+        }
     }
+
 
     /**
      * Obtiene un medio de pago por su ID en formato DTO.
