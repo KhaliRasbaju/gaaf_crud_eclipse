@@ -80,19 +80,25 @@ public class MedioPagoService {
      * @throws NotFoundException Si no se encuentra el medio de pago.
      */
     public MedioPago editar(DatosRegistrarMedioPago datos, Long id) {
-        var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
-        var medio = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Medio de pago no encontrado por el producto id: " + id));
-        if (!medio.getReferencia().equals(datos.referencia())) {
-        	if(datos.referencia().equals("null")) {
-        		medio.setReferencia(null);
-        	} else {
-        		medio.setReferencia(datos.referencia());
-        	}
-        }
-        if (!medio.getMetodo().getId().equals(datos.idMetodoPago())) medio.setMetodo(metodo);
-
-        return repository.save(medio);
+    	try {
+			System.out.println(datos.idMetodoPago() + ", " + datos.referencia());
+    		var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
+    		var medio = repository.findById(id)
+    				.orElseThrow(() -> new NotFoundException("Medio de pago no encontrado por el producto id: " + id));
+    		if (!medio.getReferencia().equals(datos.referencia())) {
+    			if(datos.referencia().equals("null")) {
+    				medio.setReferencia(null);
+    			} else {
+    				medio.setReferencia(datos.referencia());
+    			}
+    		}
+    		if (!medio.getMetodo().getId().equals(datos.idMetodoPago())) medio.setMetodo(metodo);
+    		
+    		return repository.save(medio);
+		} catch (Exception e) {
+			System.out.println(e);
+			throw new BadRequestException("Error en la actualizacion del metodo de pago");
+		}
     }
 
     /**
