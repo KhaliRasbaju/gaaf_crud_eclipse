@@ -8,6 +8,8 @@ import com.udi.gaaf.errors.BadRequestException;
 import com.udi.gaaf.errors.NotFoundException;
 import com.udi.gaaf.metodo_pago.MetodoPagoService;
 
+import jakarta.transaction.Transactional;
+
 /**
  * Servicio encargado de la gestión de medios de pago.
  * Incluye validaciones y operaciones CRUD.
@@ -63,6 +65,7 @@ public class MedioPagoService {
      * @return Objeto {@link DatosDetalleMedioPago} con la información del medio creado.
      * @throws BadRequestException Si la referencia ya está registrada.
      */
+    @Transactional
     public DatosDetalleMedioPago crear(DatosRegistrarMedioPago datos) {
         existePorReferencia(datos.referencia());
         var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
@@ -79,12 +82,17 @@ public class MedioPagoService {
      * @return Objeto {@link MedioPago} actualizado.
      * @throws NotFoundException Si no se encuentra el medio de pago.
      */
+    @Transactional
     public MedioPago editar(DatosRegistrarMedioPago datos, Long id) {
     	try {
 			System.out.println(datos.idMetodoPago() + ", " + datos.referencia());
+			
     		var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
     		var medio = repository.findById(id)
     				.orElseThrow(() -> new NotFoundException("Medio de pago no encontrado por el producto id: " + id));
+    		System.out.println("REF BD = " + medio.getReferencia());
+    		System.out.println("REF NUEVA = " + datos.referencia());
+    		System.out.println("SON IGUALES? " + medio.getReferencia().equals(datos.referencia()));
     		if (!medio.getReferencia().equals(datos.referencia())) {
     			if(datos.referencia().equals("null")) {
     				medio.setReferencia(null);
@@ -119,6 +127,7 @@ public class MedioPagoService {
      * @return Respuesta con el código y mensaje de eliminación.
      * @throws BadRequestException Si existe un pedido asociado.
      */
+    @Transactional
     public DatosDetalleResponse eliminarPorId(Long id) {
         var medio = obtenerMedioPagoPorId(id);
         repository.delete(medio);
