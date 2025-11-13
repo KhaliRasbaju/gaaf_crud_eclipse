@@ -18,11 +18,4 @@ public interface MedioPagoRepository extends JpaRepository<MedioPago, Long> {
      */
     Optional<MedioPago> findByReferencia(String referencia);
 
-    /**
-     * Busca un medio de pago asociado a un pedido por su ID.
-     *
-     * @param idPedido ID del pedido.
-     * @return Un Optional con el medio de pago encontrado, o vacío si no existe.
-     */
-    Optional<MedioPago> findByPedidoId(Long idPedido);
 }

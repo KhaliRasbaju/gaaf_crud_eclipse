@@ -81,9 +81,8 @@ public class MedioPagoService {
      */
     public MedioPago editar(DatosRegistrarMedioPago datos, Long id) {
         var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
-        var medio = repository.findByPedidoId(id)
+        var medio = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Medio de pago no encontrado por el producto id: " + id));
-
         if (!medio.getReferencia().equals(datos.referencia())) medio.setReferencia(datos.referencia());
         if (!medio.getMetodo().getId().equals(datos.idMetodoPago())) medio.setMetodo(metodo);
 
