@@ -190,6 +190,7 @@ public class PedidoService {
      */
     @Transactional
     public DatosDetalleResponse eliminarPorId(Long id) {
+
         var pedido = obtenerPedidoPorId(id);
         validarRecibirPedido(pedido);
 
@@ -198,31 +199,30 @@ public class PedidoService {
         }
 
         try {
-            // Guardar el ID del medio de pago antes de eliminar el pedido
-            Long medioPagoId = pedido.getPago() != null ? pedido.getPago().getId() : null;
+            // 1. Eliminar los detalles del pedido
+            detallePedidoService.eliminarPorPedidoId(pedido.getId());
 
-            // Eliminar los detalles del pedido correctamente
-            if (pedido.getDetallePedidos() != null && !pedido.getDetallePedidos().isEmpty()) {
-                pedido.getDetallePedidos().clear(); 
-            }
+            // 2. Guardar ID del medio de pago ANTES de soltarlo
+            Long medioPagoId = pedido.getPago().getId();
 
-            // Quitar la relación con el medio de pago
+            // 3. Desvincular el pago
             pedido.setPago(null);
+            repository.save(pedido); // << necesario para evitar TransientObjectException
 
-            // Eliminar el pedido
+            // 4. Eliminar el pedido
             repository.delete(pedido);
 
-            // Luego eliminar el medio de pago
-            if (medioPagoId != null) {
-                medioPagoService.eliminarPorId(medioPagoId);
-            }
+            // 5. Eliminar el medio de pago
+            medioPagoService.eliminarPorId(medioPagoId);
 
-            return new DatosDetalleResponse(200, "Pedido y medio de pago eliminados correctamente");
+            return new DatosDetalleResponse(200, "Pedido eliminado correctamente");
+
         } catch (Exception e) {
-            System.out.println("Error al eliminar el pedido: " + e.getMessage());
-            return new DatosDetalleResponse(400, "Error al eliminar el pedido y su medio de pago");
+            e.printStackTrace();
+            return new DatosDetalleResponse(400, "Error al eliminar el pedido");
         }
     }
+
 
    
 }
