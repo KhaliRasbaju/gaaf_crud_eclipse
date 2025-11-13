@@ -44,10 +44,6 @@ public class MedioPago {
     @JoinColumn(name = "id_metodo_pago", nullable = false)
     private MetodoPago metodo;
 
-    /** Pedido asociado al medio de pago (relación uno a uno) */
-    @OneToOne(mappedBy = "pago")
-    private Pedido pedido;
-
     /**
      * Constructor para crear un medio de pago a partir de los datos de registro.
      *

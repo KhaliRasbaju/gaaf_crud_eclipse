@@ -110,9 +110,6 @@ public class MedioPagoService {
      */
     public DatosDetalleResponse eliminarPorId(Long id) {
         var medio = obtenerMedioPagoPorId(id);
-        if (medio.getPedido() != null) {
-            throw new BadRequestException("No se puede eliminar ya hay un pedido asociado a este medio de pago");
-        }
         repository.delete(medio);
         return new DatosDetalleResponse(200, "Medio de pago borrado correctamente");
     }
