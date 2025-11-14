@@ -69,10 +69,14 @@ public class MetodoPagoService {
     		existeMetodoPago(datos.nombre());
     		var metodo = new MetodoPago(datos);
     		repository.save(metodo);
-			return new DatosDetalleResponse(201, "Metodo de pago creado correctamente");
+			return new DatosDetalleResponse(201, "Método  de pago creado correctamente");
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al crear el metodo de pago");
+			throw  new BadRequestException("Error al crear el método de pago");
 		}
     	
     }
@@ -93,9 +97,13 @@ public class MetodoPagoService {
     		}
     		repository.save(metodo);
     		return new DatosDetalleResponse(200, "Método de pago actualizado correctamente");
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Erro al actualizar el metodo de pago");
+			throw  new BadRequestException("Error al actualizar el método de pago");
 		}
     }
 

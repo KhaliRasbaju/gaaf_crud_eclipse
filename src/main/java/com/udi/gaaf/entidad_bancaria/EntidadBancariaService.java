@@ -58,9 +58,13 @@ public class EntidadBancariaService {
         	var entidad = new EntidadBancaria(datos);
         	repository.save(entidad);
         	return new DatosDetalleResponse(201, "Entidad bancaria creada correctamente");
+		} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al crear la entidad bancaria");
+			throw  new BadRequestException("Error al crear la entidad bancaria");
 		}
     	
     	
@@ -83,9 +87,13 @@ public class EntidadBancariaService {
     		if (datos.nombre() != null) entidad.setNombre(datos.nombre());
     		repository.save(entidad);
     		return new DatosDetalleResponse(200, "Entidad bancaria actualizada correctamente");
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al actualizar la entidad bancaria");
+			throw  new BadRequestException("Error al crear al actualizar la entidad bancaria");
 		}
     }
 

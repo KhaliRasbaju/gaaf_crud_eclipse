@@ -58,9 +58,13 @@ public class ProductoService {
     		var producto = new Producto(datos);
     		repository.save(producto);
     		return new DatosDetalleResponse(201, "Producto creado correctamente");
+		} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al crear el producto");
+			throw  new BadRequestException("Error al crear el producto");
 		}
     }
 
@@ -81,10 +85,14 @@ public class ProductoService {
     		if (datos.tipo() != producto.getTipo()) producto.setTipo(datos.tipo());
     		repository.save(producto);
     		return new DatosDetalleResponse(200, "Producto actualizado correctamente");
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al actualizar el producto");
-		}	
+			throw  new BadRequestException("Error al actualizar el producto");
+		}
     }
 
     /**

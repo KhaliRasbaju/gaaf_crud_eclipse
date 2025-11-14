@@ -93,9 +93,13 @@ public class PedidoService {
     		var nuevoPedido = repository.save(pedido);
     		datos.detalle().forEach(d -> detallePedidoService.crear(d, nuevoPedido));
     		return new DatosDetalleResponse(201, "Pedido creado correctamente");
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Eror al crear el pedido");
+			throw  new BadRequestException("Error al crear un pedido");
 		}
     }
 
@@ -135,10 +139,14 @@ public class PedidoService {
             }
 
             repository.save(pedido);
-            return new DatosDetalleResponse(200, "Pedido actualizado correctamente");
+            return new DatosDetalleResponse(200, "Pedido actualizado correctamente");		
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al actualizar el pedido");
+			throw  new BadRequestException("Error al actualizar el pedido");
 		}
     	
         
@@ -217,12 +225,15 @@ public class PedidoService {
             // 5. Eliminar el medio de pago
             medioPagoService.eliminarPorId(medioPagoId);
 
-            return new DatosDetalleResponse(200, "Pedido eliminado correctamente");
-
-        } catch (Exception e) {
-        	System.out.println("Error tipo:" + e);
-            throw new BadRequestException("Error al eliminar el pedido");
-        }
+            return new DatosDetalleResponse(200, "Pedido eliminado correctamente");       
+        } catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
+		} catch (Exception e) {
+			System.out.println(e);
+			throw  new BadRequestException("Error al eliminar el pedido");
+		}
     }
 
 

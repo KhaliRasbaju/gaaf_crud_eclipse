@@ -98,9 +98,13 @@ public class ProveedorService {
     		cuentaService.crear(datos.cuenta(), nuevoProveedor);
     		ubicacionService.crear(datos.ubicacion(), nuevoProveedor);    	
     		return new DatosDetalleResponse(201, "Proveedor creado correctamente");			
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al crear el proveedor");
+			throw  new BadRequestException("Error al crear el proveedor");
 		}
     }
 
@@ -124,9 +128,13 @@ public class ProveedorService {
     		cuentaService.editar(datos.cuenta(), nit);
     		ubicacionService.editar(datos.ubicacion(), proveedor);
     		return new DatosDetalleResponse(200, "Proveedor actualizado correctamente");
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al actualizar el proveedor");
+			throw  new BadRequestException("Error al actualizar el proveedor");
 		}
     }
 

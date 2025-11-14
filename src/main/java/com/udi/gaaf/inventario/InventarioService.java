@@ -50,8 +50,11 @@ public class InventarioService {
      * @throws NotFoundException si no existe el inventario solicitado.
      */
     public Inventario obtenerPorInventarioIds(DatosBuscarInventarioIds datos) {
+    	
+    	var bodega = bodegaService.obtenerPorId(datos.idBodega());
+    	var producto = productoService.obtenerPorId(datos.idProducto());
         return repository.findById_IdBodegaAndId_IdProducto(datos.idBodega(), datos.idProducto())
-                .orElseThrow(() -> new NotFoundException("No hay inventario por el id de la bodega: " + datos.toString()));
+                .orElseThrow(() -> new NotFoundException(String.format("No hay inventario por la bodega: '%s' y el producto '%s'", bodega.nombre(), producto.nombre())));
     }
 
     /**

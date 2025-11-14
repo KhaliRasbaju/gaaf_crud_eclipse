@@ -73,9 +73,13 @@ public class BodegaService {
     		var bodega = new Bodega(datos);
     		repository.save(bodega);
     		return new DatosDetalleResponse(201, "Bodega creada correctamente"); 
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(500, "Error al crear la bodega"); 
+			throw  new BadRequestException("Error al crear la bodega");
 		}
     }
 
@@ -94,9 +98,13 @@ public class BodegaService {
     		if (datos.ubicacion() != null) bodega.setUbicacion(datos.ubicacion());
     		repository.save(bodega);
     		return new DatosDetalleResponse(200, "Bodega actualizada correctamente");
+    	} catch (NotFoundException ex) {
+			throw ex;
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al actualizar la bodega.");
+			throw  new BadRequestException("Error al actualizar la bodega");
 		}
     }
 

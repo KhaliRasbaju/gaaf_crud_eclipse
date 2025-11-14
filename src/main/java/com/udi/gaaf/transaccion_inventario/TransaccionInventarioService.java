@@ -91,11 +91,13 @@ public class TransaccionInventarioService {
     		var transaccion = new TransaccionInventario(datos, inventario, pedido);
     		repository.save(transaccion);
     		return new DatosDetalleResponse(200, "Transacción creada correctamente");
+		} catch (NotFoundException ex) {
+			throw ex;
 		} catch (BadRequestException ex) {
 			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
-			return new DatosDetalleResponse(400, "Error al crear la transacción");
+			throw  new BadRequestException("Error al crear la transacción");
 		}
     	
     }
