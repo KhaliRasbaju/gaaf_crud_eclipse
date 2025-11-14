@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.udi.gaaf.common.DatosDetalleResponse;
+import com.udi.gaaf.errors.BadRequestException;
 import com.udi.gaaf.errors.NotFoundException;
 import com.udi.gaaf.inventario.DatosBuscarInventarioIds;
 import com.udi.gaaf.inventario.DatosRegistrarInventario;
@@ -90,6 +91,8 @@ public class TransaccionInventarioService {
     		var transaccion = new TransaccionInventario(datos, inventario, pedido);
     		repository.save(transaccion);
     		return new DatosDetalleResponse(200, "Transacción creada correctamente");
+		} catch (BadRequestException ex) {
+			throw ex;
 		} catch (Exception e) {
 			System.out.println(e);
 			return new DatosDetalleResponse(400, "Error al crear la transacción");
