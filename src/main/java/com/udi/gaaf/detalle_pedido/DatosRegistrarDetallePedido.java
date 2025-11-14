@@ -17,11 +17,24 @@ import jakarta.validation.constraints.Positive;
  * @param idProducto   Identificador del producto asociado.
  */
 public record DatosRegistrarDetallePedido(
-    @Positive @NotNull Float humedad,
-    @Positive @NotNull Float estadoCacao,
-    @Positive @NotNull Float fermentacion,
-    @Positive @NotNull Integer cantidad,
-    @Positive @NotNull Float peso,
-    @Null String observacion,
-    @Positive @NotNull Long idProducto
+    @Positive 
+    @NotNull 
+    Float humedad,
+    @Positive 
+    @NotNull
+    Float estadoCacao,
+    @Positive
+    @NotNull
+    Float fermentacion,
+    @Positive
+    @NotNull
+    Integer cantidad,
+    @Positive
+    @NotNull
+    Float peso,
+    @Null
+    String observacion,
+    @Positive
+    @NotNull
+    Long idProducto
 ) {}

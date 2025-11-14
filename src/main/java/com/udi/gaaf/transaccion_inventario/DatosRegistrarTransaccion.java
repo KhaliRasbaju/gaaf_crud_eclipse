@@ -20,7 +20,8 @@ public record DatosRegistrarTransaccion(
         @NotNull(message = "campo se requerid [ENTRADA | PRODUCCION | MERMA]")
         TipoTransaccion tipo,
 
-        @NotNull @Positive
+        @NotNull 
+        @Positive
         Integer cantidad,
 
         @NotBlank
@@ -29,9 +30,11 @@ public record DatosRegistrarTransaccion(
         @Positive
         Long idPedido,
 
-        @NotNull @Positive
+        @NotNull 
+        @Positive
         Long idProducto,
 
-        @NotNull @Positive
+        @NotNull 
+        @Positive
         Long idBodega
 ) {}
