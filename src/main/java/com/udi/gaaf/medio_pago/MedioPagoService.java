@@ -90,12 +90,11 @@ public class MedioPagoService {
             var metodo = metodoPagoService.obtenerMetodoPagoPorId(datos.idMetodoPago());
             var medio = repository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Medio de pago no encontrado por id: " + id));
-
-            // Comparación segura
+           
             if (!Objects.equals(medio.getReferencia(), datos.referencia())) {
 
-                if ("null".equals(datos.referencia())) {
-                    medio.setReferencia(null);
+                if (datos.referencia().equals("null")) {
+                    medio.setReferencia("Sin referencia");
                 } else {
                     medio.setReferencia(datos.referencia());
                 }
